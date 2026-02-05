@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "billReceivableId": 2,
+      "company": {
+        "id": 3,
+        "name": "SC1 FUNDO DE INVESTIMENTO"
+      },
+      "costCenter": {
+        "id": 540,
+        "name": "SC1_P1_0374-1001905-37"
+      },
+      "customer": {
+        "id": 889,
+        "name": "JHONY HARRISON SILVA",
+        "document": "437.695.768-29"
+      },
+      "emissionDate": "2024-08-10",
+      "lastRenegotiationDate": "2024-08-12",
+      "document": "ACOR.0374",
+      "installments": [
+        {
+          "id": 1,
+          "originalValue": 3000.0,
+          "dueDate": "2024-08-13",
+          "installmentNumber": "1/10",
+          "receipts": [
+            {
+              "date": "2024-08-10",
+              "value": 3000.0,
+              "extra": 0.0,
+              "discount": 0.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
