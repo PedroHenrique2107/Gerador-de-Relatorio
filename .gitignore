@@ -15,11 +15,12 @@ node_modules/
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-<<<<<<< HEAD
-=======
 /api-server/.env
-/api-server/node_modules/
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
+/api-server/node_modules
+/backend/node_modules
+/backend/.env
+/frontend/node_modules
+/frontend/.env
 
 # Testing
 /coverage
