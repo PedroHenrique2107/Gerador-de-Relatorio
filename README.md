@@ -1,6 +1,6 @@
-# Sistema de Geração de Relatórios Sienge
+# Sistema de Geração de Relatórios vinda do SQL
 
-Sistema completo para geração automatizada de relatórios financeiros a partir de dados do Sienge.
+Sistema completo para geração automatizada de relatórios.
 
 ## Arquitetura
 
@@ -18,8 +18,8 @@ Frontend (React) → API Server (Node.js) → Python Scripts
 - Gerencia jobs assíncronos
 - Porta: 3001
 
-### 2. Backend Python (Existente)
-- Processa JSONs do Sienge
+### 2. Backend Python 
+- Processa JSONs
 - Insere dados no MySQL
 - Localização: `/app/backend/`
 
@@ -129,15 +129,15 @@ MYSQL_DATABASE=seu_database
 
 ### Tabelas MySQL
 <<<<<<< HEAD
-- `SI_EXTRATO_CLIENTE_HISTORICO` - Histórico de extratos
-- `SI_DATACOMPETPARCELAS` - Parcelas por competência
-- `SI_DATAPAGTO_receipts` - Recebimentos
-- `SI_DATAPAGTO_receiptsCategories` - Categorias
+- `...`
+- `...`
+- `...`
+- `...`
 =======
-- `...
-- `...   
-- `... 
-- `... 
+- `...`
+- `...`
+- `...`
+- `...`
 >>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 - `RELATORIO_CONSOLIDADO` - Resultado da query
 
