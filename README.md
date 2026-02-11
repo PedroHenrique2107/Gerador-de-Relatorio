@@ -1,20 +1,3 @@
-Perfeito 😎
-Vou te entregar um README moderno, visual, chamativo, com:
-
-✅ Ícones
-
-✅ Badges
-
-✅ GIF/efeito visual fake (compatível com GitHub)
-
-✅ Organização profissional
-
-✅ Visual de projeto enterprise
-
-✅ Sem conflitos de merge
-
-✅ Pronto para colar no GitHub
-
 🚀 Sistema Inteligente de Geração de Relatórios SQL
 <p align="center"> <img src="https://img.shields.io/badge/Node.js-API-green?style=for-the-badge&logo=node.js" /> <img src="https://img.shields.io/badge/React-Frontend-blue?style=for-the-badge&logo=react" /> <img src="https://img.shields.io/badge/Python-Processing-yellow?style=for-the-badge&logo=python" /> <img src="https://img.shields.io/badge/MySQL-Database-orange?style=for-the-badge&logo=mysql" /> <img src="https://img.shields.io/badge/Status-Production-success?style=for-the-badge" /> </p>
 ✨ Sobre o Projeto
