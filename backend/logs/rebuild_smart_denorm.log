@@ -1,0 +1,166 @@
+2026-02-03 17:47:31,873 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:47:31,881 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:48:14,853 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:48:14,856 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:48:15,401 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:48:15,404 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:48:15,592 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:48:15,596 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:29,933 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:29,934 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:49:29,934 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:35,096 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:49:35,097 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json -> parcelas_contareceber_datacompetparcelas
+2026-02-03 17:49:35,097 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:35,097 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-03 17:49:35,582 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
+2026-02-03 17:49:35,970 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
+2026-02-03 17:49:35,971 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
+2026-02-03 17:49:35,971 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: 'DatabaseManager' object has no attribute 'get_connection'
+2026-02-03 17:49:35,972 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: 'DatabaseManager' object has no attribute 'get_connection'
+
+2026-02-03 17:49:36,037 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:49:36,038 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json -> parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:49:36,038 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:36,039 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json
+2026-02-03 17:49:36,207 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
+2026-02-03 17:49:36,317 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
+2026-02-03 17:49:36,318 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:49:36,318 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: 'DatabaseManager' object has no attribute 'get_connection'
+2026-02-03 17:49:36,318 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: 'DatabaseManager' object has no attribute 'get_connection'
+
+2026-02-03 17:49:36,338 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:36,339 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA
+2026-02-03 17:49:36,340 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:48,306 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:48,307 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:49:48,308 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:52,941 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:49:52,942 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json -> parcelas_contareceber_datacompetparcelas
+2026-02-03 17:49:52,943 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:52,944 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-03 17:49:53,512 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
+2026-02-03 17:49:54,096 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
+2026-02-03 17:49:54,097 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
+2026-02-03 17:49:54,098 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine não inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,099 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: Engine não inicializado. Chame DatabaseManager.initialize() primeiro.
+
+2026-02-03 17:49:54,188 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:49:54,189 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json -> parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:49:54,190 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:54,191 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json
+2026-02-03 17:49:54,455 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
+2026-02-03 17:49:54,581 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
+2026-02-03 17:49:54,583 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine não inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: Engine não inicializado. Chame DatabaseManager.initialize() primeiro.
+
+2026-02-03 17:49:54,610 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:49:54,611 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA
+2026-02-03 17:49:54,612 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:50:03,523 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:50:03,524 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:50:03,524 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:32,053 - rebuild_smart_denorm - [32mINFO[0m - Operacao cancelada
+2026-02-03 17:52:43,793 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:43,794 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:52:43,794 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:43,847 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:52:43,847 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json -> parcelas_contareceber_datacompetparcelas
+2026-02-03 17:52:43,847 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:43,847 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-03 17:52:44,383 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
+2026-02-03 17:52:44,777 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
+2026-02-03 17:52:44,777 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
+2026-02-03 17:52:44,860 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '#@localhost' ([Errno 11003] getaddrinfo failed)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-02-03 17:52:44,861 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '#@localhost' ([Errno 11003] getaddrinfo failed)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-02-03 17:52:44,861 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:52:44,861 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json -> parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:52:44,861 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:44,861 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json
+2026-02-03 17:52:45,143 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
+2026-02-03 17:52:45,239 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
+2026-02-03 17:52:45,239 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:52:45,241 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '#@localhost' ([Errno 11003] getaddrinfo failed)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-02-03 17:52:45,241 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '#@localhost' ([Errno 11003] getaddrinfo failed)")
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-02-03 17:52:45,241 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:52:45,241 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA
+2026-02-03 17:52:45,241 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:04,081 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:04,082 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:53:04,082 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:04,137 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:53:04,138 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json -> parcelas_contareceber_datacompetparcelas
+2026-02-03 17:53:04,138 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:04,139 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-03 17:53:04,763 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
+2026-02-03 17:53:05,084 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
+2026-02-03 17:53:05,085 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
+2026-02-03 17:53:06,267 - rebuild_smart_denorm - [32mINFO[0m - Tabela deletada
+2026-02-03 17:53:06,276 - rebuild_smart_denorm - [32mINFO[0m - Inserindo 19378 registros...
+2026-02-03 17:53:06,276 - rebuild_smart_denorm - [31mERROR[0m - Erro ao inserir dados: 'QuickLoader' object has no attribute 'load_from_dict_list'
+2026-02-03 17:53:06,276 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: 'QuickLoader' object has no attribute 'load_from_dict_list'
+
+2026-02-03 17:53:06,370 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:53:06,371 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json -> parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:53:06,371 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:06,371 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json
+2026-02-03 17:53:06,547 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
+2026-02-03 17:53:06,677 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
+2026-02-03 17:53:06,678 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:53:06,708 - rebuild_smart_denorm - [32mINFO[0m - Tabela deletada
+2026-02-03 17:53:06,717 - rebuild_smart_denorm - [32mINFO[0m - Inserindo 3505 registros...
+2026-02-03 17:53:06,717 - rebuild_smart_denorm - [31mERROR[0m - Erro ao inserir dados: 'QuickLoader' object has no attribute 'load_from_dict_list'
+2026-02-03 17:53:06,717 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: 'QuickLoader' object has no attribute 'load_from_dict_list'
+
+2026-02-03 17:53:06,743 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:06,744 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA
+2026-02-03 17:53:06,744 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:33,741 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:33,742 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUINDO TABELAS COM DESAGRUPAMENTO INTELIGENTE
+2026-02-03 17:53:33,742 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:33,774 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:53:33,774 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json -> parcelas_contareceber_datacompetparcelas
+2026-02-03 17:53:33,774 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:33,775 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-03 17:53:34,238 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
+2026-02-03 17:53:34,534 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
+2026-02-03 17:53:34,534 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
+2026-02-03 17:53:34,699 - rebuild_smart_denorm - [32mINFO[0m - Tabela deletada
+2026-02-03 17:53:34,706 - rebuild_smart_denorm - [32mINFO[0m - Inserindo 19378 registros...
+2026-02-03 17:53:54,830 - rebuild_smart_denorm - [32mINFO[0m - Dados inseridos com sucesso
+2026-02-03 17:53:54,972 - rebuild_smart_denorm - [32mINFO[0m - SUCESSO: parcelas_contareceber_datacompetparcelas recriada com sucesso!
+
+2026-02-03 17:53:54,972 - rebuild_smart_denorm - [32mINFO[0m - 
+============================================================
+2026-02-03 17:53:54,973 - rebuild_smart_denorm - [32mINFO[0m - Processando: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json -> parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:53:54,973 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:53:54,973 - rebuild_smart_denorm - [32mINFO[0m - Lendo JSON: data/PARCELAS_CONTARECEBER_DATAPAGTOPARCELAS.json
+2026-02-03 17:53:55,328 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
+2026-02-03 17:53:55,541 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
+2026-02-03 17:53:55,542 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
+2026-02-03 17:53:55,560 - rebuild_smart_denorm - [32mINFO[0m - Tabela deletada
+2026-02-03 17:53:55,570 - rebuild_smart_denorm - [32mINFO[0m - Inserindo 3505 registros...
+2026-02-03 17:54:01,503 - rebuild_smart_denorm - [32mINFO[0m - Dados inseridos com sucesso
+2026-02-03 17:54:01,541 - rebuild_smart_denorm - [32mINFO[0m - SUCESSO: parcelas_contareceber_datapagtoparcelas recriada com sucesso!
+
+2026-02-03 17:54:01,541 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+2026-02-03 17:54:01,541 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA
+2026-02-03 17:54:01,541 - rebuild_smart_denorm - [32mINFO[0m - ============================================================

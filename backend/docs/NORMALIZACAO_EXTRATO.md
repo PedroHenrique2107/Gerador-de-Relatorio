@@ -1,0 +1,239 @@
+# 📊 Normalização do ExtratoClienteHistórico
+
+## O Problema
+
+O JSON original `ExtratoClienteHistorico.json` tem uma estrutura **aninhada/hierárquica**:
+
+```
+1 documento
+  └── 10 parcelas (array colapsado no DBForge)
+      └── N pagamentos (array colapsado no DBForge)
+```
+
+Quando importado no DBForge, os arrays ficam "colapsados" - você não consegue ver cada parcela como uma linha separada, dificultando análises e relatórios.
+
+## A Solução
+
+O script `scripts/normalize_extrato.py` **desnormaliza** o JSON em **3 tabelas relacionadas**:
+
+### 1. **billsReceivables** (Contas a Receber)
+Cada documento/empresa como uma linha:
+```
+billReceivableId | companyId | companyName | customerId | customerName | emissionDate
+2                | 3         | SC1 FUNDO...| 889        | JHONY...     | 2024-08-10
+3                | 3         | SC1 FUNDO...| 890        | EZEQUIEL...  | 2024-08-09
+```
+
+### 2. **installments** (Parcelas - CADA UMA COMO LINHA!)
+Cada parcela como uma linha separada:
+```
+billReceivableId | installmentId | installmentNumber | dueDate     | originalValue
+2                | 1             | 1/10              | 2024-08-13  | 3000.0
+2                | 2             | 2/10              | 2024-09-13  | 3000.0
+2                | 3             | 3/10              | 2024-10-13  | 3000.0
+```
+
+### 3. **receipts** (Pagamentos - CADA UM COMO LINHA!)
+Cada pagamento como uma linha separada:
+```
+receiptId | billReceivableId | installmentId | date       | value
+1         | 2                | 1             | 2024-08-10 | 3000.0
+2         | 2                | 2             | 2024-08-30 | 3000.0
+3         | 2                | 3             | 2024-09-23 | 3000.0
+```
+
+## Como Usar
+
+### 1️⃣ Teste Primeiro (Sem MySQL)
+
+```bash
+# Ativa a venv
+.venv\Scripts\activate
+
+# Testa a normalização sem inserir no MySQL
+python test_normalize.py
+```
+
+**Saída esperada:**
+```
+✓ NORMALIZAÇÃO CONCLUÍDA COM SUCESSO!
+
+📊 RESULTADO:
+  • billsReceivables: 7,039 documentos
+  • installments:     18,885 parcelas
+  • receipts:         18,900 pagamentos
+```
+
+### 2️⃣ Execute com MySQL
+
+```bash
+.venv\Scripts\activate
+python scripts/normalize_extrato.py
+```
+
+**Saída esperada:**
+```
+======================================================================
+NORMALIZANDO ExtratoClienteHistorico.json
+======================================================================
+
+✓ Carregado: 7039 registros
+✓ Normalização completa:
+  • billsReceivables: 7039 registros
+  • installments: 18885 registros
+  • receipts: 18900 registros
+
+======================================================================
+✅ NORMALIZAÇÃO CONCLUÍDA COM SUCESSO!
+======================================================================
+
+📊 RESULTADO:
+  • billsReceivables: 7,039 documentos
+  • installments:     18,885 parcelas (VISÍVEIS NO DBFORGE)
+  • receipts:         18,900 pagamentos
+
+🔗 RELACIONAMENTOS:
+  • installments → billsReceivables (billReceivableId)
+  • receipts → billsReceivables (billReceivableId)
+
+💡 NO DBFORGE, AGORA VOCÊ VÊ:
+  ✓ Cada parcela como UMA LINHA separada (não mais colapsada)
+  ✓ Cada pagamento como UMA LINHA separada
+  ✓ Todos os 7,039 clientes com dados desnormalizados
+```
+
+## Resultado no DBForge
+
+### Antes (Aninhado)
+```
+billReceivableId | companyName | installments (COLAPSADO)
+2                | SC1 FUNDO...| [{"installmentNumber":"1/10"...}, {"installmentNumber":"2/10"...}, ...]
+```
+
+### Depois (Normalizado - VISÍVEL)
+```
+installments view (expandida):
+billReceivableId | installmentNumber | dueDate    | originalValue
+2                | 1/10              | 2024-08-13 | 3000.0
+2                | 2/10              | 2024-09-13 | 3000.0
+2                | 3/10              | 2024-10-13 | 3000.0
+...
+```
+
+## Estatísticas do Dataset
+
+| Métrica | Quantidade |
+|---------|-----------|
+| Documentos (billsReceivables) | 7.039 |
+| Parcelas (installments) | 18.885 |
+| Pagamentos (receipts) | 18.900 |
+| Média de parcelas por documento | 2,7 |
+
+## Campos Disponíveis
+
+### billsReceivables
+- `billReceivableId`: ID único do documento
+- `companyId`, `companyName`: Fundo de investimento
+- `costCenterId`, `costCenterName`: Centro de custo
+- `customerId`, `customerName`, `customerDocument`: Dados do cliente
+- `emissionDate`: Data de emissão
+- `document`: Número do documento
+- `privateArea`: Área privada
+- `oldestInstallmentDate`: Data da parcela mais antiga
+- `revokedBillReceivableDate`: Data de revogação (se houver)
+
+### installments
+- `billReceivableId`: FK para billsReceivables
+- `installmentId`: ID único da parcela
+- `installmentNumber`: Número da parcela (ex: "1/10", "2/10")
+- `baseDate`: Data base para cálculo
+- `dueDate`: Data de vencimento
+- `originalValue`: Valor original
+- `currentBalance`: Saldo atual
+- `currentBalanceWithAddition`: Saldo com adições
+- `installmentSituation`: Situação da parcela
+- `generatedBillet`: Se gerou boleto
+
+### receipts
+- `receiptId`: ID único do pagamento
+- `billReceivableId`: FK para billsReceivables
+- `installmentId`: FK para installments
+- `date`: Data do pagamento
+- `value`: Valor pago
+- `discount`: Desconto concedido
+- `extra`: Juros/multa
+- `netReceipt`: Valor líquido recebido
+- `type`: Tipo de recebimento
+
+## Consultas Úteis
+
+### Parcelas pendentes de pagamento
+```sql
+SELECT 
+  b.customerName,
+  i.installmentNumber,
+  i.dueDate,
+  i.currentBalance
+FROM installments i
+JOIN billsReceivables b ON i.billReceivableId = b.billReceivableId
+WHERE i.currentBalance > 0
+ORDER BY i.dueDate ASC
+LIMIT 10;
+```
+
+### Pagamentos por cliente
+```sql
+SELECT 
+  b.customerName,
+  COUNT(r.receiptId) AS totalPagamentos,
+  SUM(r.value) AS valorTotal,
+  MAX(r.date) AS ultimoPagamento
+FROM receipts r
+JOIN billsReceivables b ON r.billReceivableId = b.billReceivableId
+GROUP BY b.billReceivableId, b.customerName
+ORDER BY valorTotal DESC
+LIMIT 10;
+```
+
+### Parcelas atrasadas
+```sql
+SELECT 
+  b.customerName,
+  i.installmentNumber,
+  i.dueDate,
+  i.originalValue,
+  i.currentBalance
+FROM installments i
+JOIN billsReceivables b ON i.billReceivableId = b.billReceivableId
+WHERE i.currentBalance > 0 
+  AND i.dueDate < CURDATE()
+ORDER BY i.dueDate ASC;
+```
+
+## Troubleshooting
+
+### Erro: "Arquivo não encontrado: data/ExtratoClienteHistorico.json"
+- Verifique se o arquivo está em `./data/`
+- O caminho é relativo ao diretório do projeto
+
+### Erro: "Falha ao conectar no banco de dados"
+- Verifique o arquivo `.env` com as credenciais do MySQL
+- Teste a conexão: `python scripts/main.py --help`
+
+### Erro: "ModuleNotFoundError: No module named 'app'"
+- Verifique se a venv está ativada: `source .venv/bin/activate`
+- Execute do diretório raiz do projeto
+
+## Próximas Etapas
+
+1. ✅ Testar normalização (test_normalize.py)
+2. ✅ Carregar em MySQL (scripts/normalize_extrato.py)
+3. 🔄 Criar índices para performance
+4. 🔄 Visualizar em DBForge (agora com dados normalizados)
+5. 🔄 Criar reports e dashboards
+
+---
+
+**Criado em:** 28/01/2026  
+**Última atualização:** 28/01/2026  
+**Status:** ✅ Produção

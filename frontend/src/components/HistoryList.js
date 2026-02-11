@@ -1,5 +1,9 @@
 import React from 'react';
 import './HistoryList.css';
+<<<<<<< HEAD
+=======
+import { BACKEND_BASE_URL } from '../services/api';
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 
 function HistoryList({ history }) {
   if (!history || history.length === 0) {
@@ -87,7 +91,11 @@ function HistoryItem({ item }) {
                 Concluído
               </span>
               <a 
+<<<<<<< HEAD
                 href={`${process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001'}${item.downloadUrl}`}
+=======
+                href={`${BACKEND_BASE_URL}${item.downloadUrl}`}
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
                 className="download-link"
                 download
                 data-testid="download-link"

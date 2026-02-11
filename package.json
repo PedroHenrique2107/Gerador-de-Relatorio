@@ -1,0 +1,10 @@
+{
+  "name": "gerador-relatorio-runner",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB -c blue,green \"cd api-server && yarn start\" \"cd frontend && yarn start\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

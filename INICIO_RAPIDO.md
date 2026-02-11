@@ -65,11 +65,17 @@ Interface rodando em: http://localhost:3000
 
 ### Opção 2: Iniciar tudo em background
 ```bash
+<<<<<<< HEAD
 # API Server
 cd /app/api-server && node server.js > logs/api.log 2>&1 &
 
 # Frontend
 cd /app/frontend && yarn start &
+=======
+# FullStack
+npm run dev
+
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 ```
 
 ## 🎯 Usar o Sistema

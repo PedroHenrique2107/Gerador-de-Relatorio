@@ -77,6 +77,14 @@ yarn install
 yarn start
 ```
 
+<<<<<<< HEAD
+=======
+### 5. Rode a Aplicação (Fontend + Backend)
+```bash
+npm run dev
+```
+
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 ## Configuração MySQL
 
 Edite `/app/api-server/.env`:
@@ -120,17 +128,30 @@ MYSQL_DATABASE=seu_database
 ## Estrutura de Dados
 
 ### Tabelas MySQL
+<<<<<<< HEAD
 - `SI_EXTRATO_CLIENTE_HISTORICO` - Histórico de extratos
 - `SI_DATACOMPETPARCELAS` - Parcelas por competência
 - `SI_DATAPAGTO_receipts` - Recebimentos
 - `SI_DATAPAGTO_receiptsCategories` - Categorias
+=======
+- `...
+- `...   
+- `... 
+- `... 
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 - `RELATORIO_CONSOLIDADO` - Resultado da query
 
 ### Arquivos JSON
 Localização: `/app/backend/data/`
+<<<<<<< HEAD
 - EXTRATO_CLIENTE_HISTORICO.json
 - PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
 - PARCELAS_CONTARECEBER_DATAPAGTO.json
+=======
+- .json
+- .json
+- .json
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 
 ## Performance
 

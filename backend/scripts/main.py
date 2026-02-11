@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/env python3
 """
 Script Principal - Processa JSONs do Sienge e insere no MySQL
@@ -9,10 +10,20 @@ Este script simula o processamento que o backend já faz:
 
 Uso:
     python main.py --dir /path/to/data --pattern *.json --mode quick --chunk-size 5000 --if-exists replace
+=======
+#!/usr/bin/env python
+"""
+Script principal - CLI para carregar JSON em MySQL.
+
+Uso:
+    python scripts/main.py --file data/arquivo.json --table minha_tabela
+    python scripts/main.py --dir data/ --pattern "*.json"
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 """
 
 import sys
 import os
+<<<<<<< HEAD
 import json
 import argparse
 import time
@@ -214,6 +225,195 @@ def main():
     finally:
         if connection:
             connection.close()
+=======
+from pathlib import Path
+
+# ⚠️ VALIDA VIRTUAL ENVIRONMENT - ANTES DE QUALQUER OUTRA IMPORTAÇÃO
+# Isso deve ser feito ANTES de importar modules que dependem de packages
+os.chdir(Path(__file__).parent.parent)
+
+# Validação simplificada inline para não depender de imports
+if 'VIRTUAL_ENV' not in os.environ and not hasattr(sys, 'real_prefix') and sys.prefix == sys.base_prefix:
+    error_msg = f"""
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    ❌ ERRO: VIRTUAL ENVIRONMENT NÃO ATIVADO               ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+⚠️  Este projeto OBRIGATORIAMENTE deve ser executado dentro de uma 
+   virtual environment (.venv).
+
+🔧 Para ativar a venv e usar a aplicação, execute:
+
+   Windows:
+   .venv\\Scripts\\activate
+   
+   macOS/Linux:
+   source .venv/bin/activate
+
+📌 OU execute diretamente com Python da venv:
+
+   Windows:
+   .venv\\Scripts\\python {' '.join(sys.argv[1:])}
+   
+   macOS/Linux:
+   .venv/bin/python {' '.join(sys.argv[1:])}
+
+💡 Para mais informações:
+   - Leia: GUIA_VENV.md
+   - Ou: COMECE_AQUI.md
+
+════════════════════════════════════════════════════════════════════════════
+"""
+    print(error_msg, file=sys.stderr)
+    sys.exit(1)
+
+# Agora SIM podemos importar os modules que dependem de packages
+import argparse
+
+# Adiciona root ao path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from app.application import JSONMySQLApplication, ApplicationConfig
+from app.core import setup_logger, get_logger
+
+logger = setup_logger('main')
+
+
+def main():
+    """Função principal."""
+    parser = argparse.ArgumentParser(
+        description='Carrega arquivos JSON em MySQL'
+    )
+    
+    # Modo: arquivo único ou diretório
+    input_group = parser.add_mutually_exclusive_group(required=True)
+    input_group.add_argument(
+        '--file',
+        type=Path,
+        help='Arquivo JSON para carregar'
+    )
+    input_group.add_argument(
+        '--dir',
+        type=Path,
+        help='Diretório com arquivos JSON'
+    )
+    
+    # Opções
+    parser.add_argument(
+        '--table',
+        type=str,
+        help='Nome da tabela (auto se não especificado)'
+    )
+    parser.add_argument(
+        '--pattern',
+        type=str,
+        default='*.json',
+        help='Padrão de arquivo (default: *.json)'
+    )
+    parser.add_argument(
+        '--mode',
+        type=str,
+        default='quick',
+        choices=['quick', 'load', 'upsert'],
+        help='Modo de carregamento'
+    )
+    parser.add_argument(
+        '--chunk-size',
+        type=int,
+        default=5000,
+        help='Tamanho do chunk'
+    )
+    parser.add_argument(
+        '--if-exists',
+        type=str,
+        default='append',
+        choices=['fail', 'replace', 'append'],
+        help='Ação se tabela existe'
+    )
+    parser.add_argument(
+        '--env',
+        type=str,
+        default='development',
+        choices=['development', 'testing', 'production'],
+        help='Ambiente'
+    )
+    parser.add_argument(
+        '--debug',
+        action='store_true',
+        help='Ativa modo debug'
+    )
+    parser.add_argument(
+        '--lines',
+        action='store_true',
+        help='Trata como NDJSON (newline-delimited)'
+    )
+    
+    args = parser.parse_args()
+    
+    app = None
+    try:
+        # Inicializa aplicação
+        app_config = ApplicationConfig(
+            env=args.env,
+            debug=args.debug,
+            loader_mode=args.mode,
+            chunk_size=args.chunk_size,
+        )
+        
+        app = JSONMySQLApplication(app_config)
+        
+        # Carrega arquivo(s)
+        if args.file:
+            logger.info(f"Carregando arquivo: {args.file}")
+            # Define o nome da tabela:
+            # - Se o usuário informou --table, usa esse nome
+            # - Senão, usa o nome do arquivo sem extensão
+            table_name = args.table or args.file.stem
+            
+            result = app.load_json(
+                args.file,
+                table_name,
+                lines=args.lines,
+                if_exists=args.if_exists,
+            )
+            
+            print(f"\n{'='*60}")
+            print(f"Resultado: {result}")
+            print(f"{'='*60}\n")
+            
+            return 0 if result.success else 1
+        
+        elif args.dir:
+            logger.info(f"Carregando diretório: {args.dir}")
+            
+            files = sorted(Path(args.dir).glob(args.pattern))
+            if not files:
+                logger.error(f"Nenhum arquivo encontrado: {args.dir}/{args.pattern}")
+                return 1
+            
+            results = app.load_multiple(
+                files,
+                lines=args.lines,
+                if_exists=args.if_exists,
+            )
+            
+            print(f"\n{'='*60}")
+            print(f"Resumo: {len(results)} arquivos carregados")
+            for result in results:
+                print(f"  {'OK' if result.success else 'ERRO'} {result}")
+            print(f"{'='*60}\n")
+            
+            return 0 if all(r.success for r in results) else 1
+    
+    except Exception as e:
+        logger.error(f"Erro: {e}", exc_info=True)
+        return 1
+    
+    finally:
+        if app:
+            app.cleanup()
+
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -1,0 +1,31 @@
+# Ambiente
+.venv/
+.env
+*.pyc
+__pycache__/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testes
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Arquivos temporários
+*.csv
+*.tmp
+/temp/
+/temp_csv/
+
+# Arquivos de log
+*.json
+
+# Build
+dist/
+build/

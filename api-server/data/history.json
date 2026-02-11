@@ -1,1 +1,84 @@
+<<<<<<< HEAD
 []
+=======
+[
+  {
+    "id": 6,
+    "jobId": "55d3d58a-7fe2-405a-b3ae-e5bc0639ce64",
+    "formato": "txt",
+    "status": "completed",
+    "fileName": "relatorio_20260211_124130_19618.txt",
+    "fileSize": "9.2 MB",
+    "recordCount": 19618,
+    "processingTime": "6m 29s",
+    "createdAt": "2026-02-11T15:35:01.260Z",
+    "downloadUrl": "/downloads/relatorio_20260211_124130_19618.txt",
+    "error": null
+  },
+  {
+    "id": 5,
+    "jobId": "04cf7daf-7c27-47ea-85ca-3c1d73834c49",
+    "formato": "xls",
+    "status": "completed",
+    "fileName": "relatorio_20260211_120324_19618.xlsx",
+    "fileSize": "1.8 MB",
+    "recordCount": 19618,
+    "processingTime": "7m 5s",
+    "createdAt": "2026-02-11T14:56:27.524Z",
+    "downloadUrl": "/downloads/relatorio_20260211_120324_19618.xlsx",
+    "error": null
+  },
+  {
+    "id": 4,
+    "jobId": "d6f8711a-99ac-4eed-b234-c7ef384b6e00",
+    "formato": "xls",
+    "status": "completed",
+    "fileName": "relatorio_20260211_095433_19618.xlsx",
+    "fileSize": "1.8 MB",
+    "recordCount": 19618,
+    "processingTime": "8m 11s",
+    "createdAt": "2026-02-11T12:46:29.623Z",
+    "downloadUrl": "/downloads/relatorio_20260211_095433_19618.xlsx",
+    "error": null
+  },
+  {
+    "id": 3,
+    "jobId": "8570b66c-8a22-43ad-8d31-bbe03c93f476",
+    "formato": "xls",
+    "status": "completed",
+    "fileName": "relatorio_20260210_114719_19618.xlsx",
+    "fileSize": "1.8 MB",
+    "recordCount": 19618,
+    "processingTime": "8m 44s",
+    "createdAt": "2026-02-10T14:38:40.286Z",
+    "downloadUrl": "/downloads/relatorio_20260210_114719_19618.xlsx",
+    "error": null
+  },
+  {
+    "id": 2,
+    "jobId": "4f88627f-5db6-4e59-a588-7e6d339c1ba3",
+    "formato": "csv",
+    "status": "completed",
+    "fileName": "relatorio_20260210_094730_19618.csv",
+    "fileSize": "5.1 MB",
+    "recordCount": 19618,
+    "processingTime": "7m 22s",
+    "createdAt": "2026-02-10T12:40:07.391Z",
+    "downloadUrl": "/downloads/relatorio_20260210_094730_19618.csv",
+    "error": null
+  },
+  {
+    "id": 1,
+    "jobId": "0c44b868-82b9-4f2a-a8d5-5520e2458b71",
+    "formato": "csv",
+    "status": "completed",
+    "fileName": "relatorio_20260209_171236_19606.csv",
+    "fileSize": "5.1 MB",
+    "recordCount": 19606,
+    "processingTime": "8m 4s",
+    "createdAt": "2026-02-09T20:04:32.128Z",
+    "downloadUrl": "/downloads/relatorio_20260209_171236_19606.csv",
+    "error": null
+  }
+]
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)

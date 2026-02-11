@@ -1,0 +1,38 @@
+2026-02-03 17:12:49,879 - select_upload - [31mERROR[0m - Erro fatal: Falha ao conectar no banco de dados
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 175, in main
+    upload_files(selected)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 106, in upload_files
+    app = JSONMySQLApplication(app_config)
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\app\application.py", line 58, in __init__
+    raise RuntimeError("Falha ao conectar no banco de dados")
+RuntimeError: Falha ao conectar no banco de dados
+2026-02-03 17:16:32,371 - select_upload - [31mERROR[0m - Erro fatal: Falha ao conectar no banco de dados
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 175, in main
+    upload_files(selected)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 106, in upload_files
+    app = JSONMySQLApplication(app_config)
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\app\application.py", line 58, in __init__
+    raise RuntimeError("Falha ao conectar no banco de dados")
+RuntimeError: Falha ao conectar no banco de dados
+2026-02-03 17:31:43,665 - select_upload - [31mERROR[0m - Erro fatal: 'JSONMySQLApplication' object has no attribute 'db_manager'
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 290, in main
+    upload_files(selected)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 143, in upload_files
+    tracker = UploadTracker(app.db_manager)
+                            ^^^^^^^^^^^^^^
+AttributeError: 'JSONMySQLApplication' object has no attribute 'db_manager'
+2026-02-03 17:32:14,165 - select_upload - [31mERROR[0m - Erro fatal: type object 'DatabaseManager' has no attribute 'get_instance'
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 290, in main
+    upload_files(selected)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\PedroMendes\OneDrive - SMART COMPASS\Documentos\Aplicações\JSON para SQL em Python\scripts\select_and_upload.py", line 143, in upload_files
+    tracker = UploadTracker(DatabaseManager.get_instance())
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'DatabaseManager' has no attribute 'get_instance'

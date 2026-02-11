@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: json-mysql-loader-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: teste_json
+      MYSQL_USER: loader
+      MYSQL_PASSWORD: loader_password
+      TZ: 'UTC'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Configurar local_infile na inicialização
+      - ./docker-mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+    networks:
+      - json-mysql-network
+
+  # Aplicação Python (para testes)
+  app:
+    build: .
+    container_name: json-mysql-loader-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: loader
+      MYSQL_PASSWORD: loader_password
+      MYSQL_DATABASE: teste_json
+      MYSQL_LOCAL_INFILE: 1
+    volumes:
+      - ./:/app
+      - ./dados:/data
+    networks:
+      - json-mysql-network
+    # Manter container rodando para debug
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  json-mysql-network:
+    driver: bridge
+
+# Uso:
+# 
+# 1. Iniciar tudo:
+#    docker-compose up -d
+#
+# 2. Executar carga:
+#    docker-compose exec app python -m src.json_to_mysql_quick \
+#      --json-path /data/arquivo.ndjson \
+#      --table teste \
+#      --lines
+#
+# 3. Ver logs:
+#    docker-compose logs -f app
+#
+# 4. Parar:
+#    docker-compose down
+#
+# 5. Limpar tudo (incluso dados):
+#    docker-compose down -v

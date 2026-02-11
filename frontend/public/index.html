@@ -1,6 +1,13 @@
 <!doctype html>
+<<<<<<< HEAD
 <html lang="en">
     <head>
+=======
+<html lang="pt-BR">
+    <head>
+        <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/image/LogoSmartCompassPreto32x32.png" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/image/LogoSmartCompassPreto32x32.png" />
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
@@ -9,6 +16,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
         <!--
+<<<<<<< HEAD
         manifest.json provides metadata used when your web app is installed on a
         user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
         -->
@@ -30,17 +38,51 @@
             // Only load visual edit scripts when inside an iframe
             if (window.self !== window.top) {
                 // Load debug monitor script
+=======
+        manifest.json fornece metadados utilizados quando seu aplicativo web é instalado
+        no dispositivo móvel ou desktop do usuário. Veja:
+        https://developers.google.com/web/fundamentals/web-app-manifest/
+        -->
+        <!--
+        Observe o uso de %PUBLIC_URL% nas tags acima.
+        Ele será substituído pela URL da pasta `public` durante o build.
+        Apenas arquivos dentro da pasta `public` podem ser referenciados neste HTML.
+
+        Diferente de "/favicon.ico" ou "favicon.ico", "%PUBLIC_URL%/favicon.ico"
+        funcionará corretamente tanto com roteamento do lado do cliente quanto
+        com uma URL pública que não esteja na raiz.
+        Aprenda como configurar uma URL pública não raiz executando `npm run build`.
+        -->
+        <title>SmartAtlas</title>
+        <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
+        <!--
+        Estes dois scripts foram adicionados para o Visual Edits,
+        por favor não edite ou remova-os
+        -->
+        <script>
+            // Carrega os scripts de edição visual apenas quando estiver dentro de um iframe
+            if (window.self !== window.top) {
+                // Carrega o script de monitoramento de debug
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
                 var debugMonitorScript = document.createElement('script');
                 debugMonitorScript.src = 'https://assets.emergent.sh/scripts/debug-monitor.js';
                 document.head.appendChild(debugMonitorScript);
 
+<<<<<<< HEAD
                 // Configure Tailwind
+=======
+                // Configura o Tailwind
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
                 window.tailwind = window.tailwind || {};
                 tailwind.config = {
                     corePlugins: { preflight: false },
                 };
 
+<<<<<<< HEAD
                 // Load Tailwind CDN
+=======
+                // Carrega o Tailwind via CDN
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
                 var tailwindScript = document.createElement('script');
                 tailwindScript.src = 'https://cdn.tailwindcss.com';
                 document.head.appendChild(tailwindScript);
@@ -48,6 +90,7 @@
         </script>
     </head>
     <body>
+<<<<<<< HEAD
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
         <!--
@@ -178,3 +221,14 @@
         </script>
     </body>
 </html>
+=======
+        <noscript>Você precisa habilitar o JavaScript para executar este aplicativo.</noscript>
+        <div id="root"></div>
+        <!--
+        Este arquivo HTML é um template.
+        Se você abri-lo diretamente no navegador, verá uma página vazia.
+
+        Você pode adicionar webfonts, meta tags ou analytics neste arquivo.
+        O processo de build irá inserir os scripts gerados dentro da tag <body>.
+        -->
+>>>>>>> 539d0c7 (versão completa do gerador de relatórios)
