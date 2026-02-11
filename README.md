@@ -1,221 +1,275 @@
-🚀 Sistema Inteligente de Geração de Relatórios SQL
-<p align="center"> <img src="https://img.shields.io/badge/Node.js-API-green?style=for-the-badge&logo=node.js" /> <img src="https://img.shields.io/badge/React-Frontend-blue?style=for-the-badge&logo=react" /> <img src="https://img.shields.io/badge/Python-Processing-yellow?style=for-the-badge&logo=python" /> <img src="https://img.shields.io/badge/MySQL-Database-orange?style=for-the-badge&logo=mysql" /> <img src="https://img.shields.io/badge/Status-Production-success?style=for-the-badge" /> </p>
-✨ Sobre o Projeto
+# 🚀 Sistema Inteligente de Geração de Relatórios SQL
 
-Sistema completo para geração automatizada de relatórios consolidados a partir do MySQL, com:
+<p align="center">
 
-⚡ Processamento assíncrono
+<img src="https://img.shields.io/badge/Node.js-API-green?style=for-the-badge&logo=node.js" />
+<img src="https://img.shields.io/badge/React-Frontend-blue?style=for-the-badge&logo=react" />
+<img src="https://img.shields.io/badge/Python-Processing-yellow?style=for-the-badge&logo=python" />
+<img src="https://img.shields.io/badge/MySQL-Database-orange?style=for-the-badge&logo=mysql" />
+<img src="https://img.shields.io/badge/Status-Production-success?style=for-the-badge" />
 
-📊 Consolidação SQL otimizada
+</p>
 
-📁 Exportação em múltiplos formatos
+---
 
-📜 Histórico de relatórios
+# 📌 Visão Geral
 
-🖥️ Interface web moderna
+Sistema completo para:
 
-🏗️ Arquitetura do Sistema
-Diagrama
-flowchart LR
-    A[Frontend - React] --> B[API Server - Node.js]
-    B --> C[Python Scripts]
-    C --> D[(MySQL Database)]
+✔ Processar arquivos JSON  
+✔ Inserir dados no MySQL  
+✔ Executar Query Consolidada  
+✔ Gerar relatórios automáticos (CSV, XLS, TXT)  
+✔ Disponibilizar download via interface web  
+
+---
+
+# 🏗️ Arquitetura do Sistema
+
+Frontend (React)
+↓
+API Server (Node.js)
+↓
+Scripts Python
+↓
+MySQL Database
 
 
-Ou de forma simplificada:
+---
 
-Frontend → API Server → Python → MySQL
+# 🧩 Componentes do Projeto
 
-🧩 Componentes
-🟢 1. API Server (Node.js)
+---
 
-🔁 Orquestra execução dos scripts Python
+## 🟢 1️⃣ API Server (Node.js)
 
-📦 Gerencia Jobs assíncronos
+📍 Porta: **3001**
 
-📜 Mantém histórico
+Responsável por:
 
-📂 Disponibiliza downloads
+- Servir API REST
+- Orquestrar execução dos scripts Python
+- Controlar jobs assíncronos
+- Gerenciar histórico de relatórios
+- Controlar timeout e logs
 
-📍 Porta: 3001
+📂 Localização:
+/app/api-server/
 
-🐍 2. Backend Python
+---
 
-📥 Processa arquivos JSON
+## 🐍 2️⃣ Backend Python
 
-🗄️ Insere dados no MySQL
+Responsável por:
 
-⚙️ Trabalha em chunks (5.000 registros)
+- Processar JSONs
+- Inserir dados no MySQL
+- Trabalhar em batches (5.000 registros)
 
-📁 /app/backend/
+📂 Localização:
+/app/backend/
 
-🧠 3. Query Engine
 
-🧮 Executa query SQL consolidada
+---
 
-🏗️ Popula tabela RELATORIO_CONSOLIDADO
+## 🔎 3️⃣ Query Python
 
-📁 /app/query/
+Responsável por:
 
-📄 4. Gerador de Relatórios
+- Executar query SQL consolidada
+- Popular tabela `RELATORIO_CONSOLIDADO`
 
-Gera arquivos:
+📂 Localização:
+/app/query/
 
-📊 CSV
 
-📈 XLS/XLSX
+---
 
-📜 TXT
+## 📄 4️⃣ Relatório Python
 
-📁 /app/relatorio/
+Responsável por:
 
-🎨 5. Frontend (React)
+- Gerar arquivos:
+  - CSV
+  - XLS / XLSX
+  - TXT
+- Ler dados da tabela `RELATORIO_CONSOLIDADO`
 
-🎛️ Seleção de formato
+📂 Localização:
+/app/relatorio/
 
-📡 Acompanhamento em tempo real
 
-📚 Histórico de relatórios
+---
 
-🌙 Suporte a tema moderno
+## ⚛️ 5️⃣ Frontend (React)
 
-📍 Porta: 3000
+📍 Porta: **3000**
 
-⚙️ Setup Completo
-📌 Pré-requisitos
+Responsável por:
 
-Node.js 14+
+- Interface minimalista
+- Seleção de formato
+- Acompanhamento de progresso
+- Histórico de relatórios
+- Download de arquivos
 
-Python 3.x
+📂 Localização:
+/app/frontend/
 
-MySQL 5.x+
 
-Yarn
+---
 
-🔹 1. API Server
+# ⚙️ Setup Completo
+
+---
+
+## 🔧 Pré-requisitos
+
+- Node.js 14+
+- Python 3.x
+- MySQL 5.x
+- Yarn
+
+---
+
+# 🚀 ETAPA 1 — Configurar API Server
+
+```bash
 cd api-server
 yarn install
 cp .env.example .env
 mkdir downloads
 yarn start
+```
+Configure as credenciais MySQL no .env.
 
-🔹 2. Query (Python)
+🐍 ETAPA 2 — Configurar Query Python
 cd query
 pip install -r requirements.txt
 
-🔹 3. Relatório (Python)
+📄 ETAPA 3 — Configurar Relatório Python
 cd relatorio
 pip install -r requirements.txt
 
-🔹 4. Frontend
+⚛️ ETAPA 4 — Configurar Frontend
 cd frontend
 yarn install
 yarn start
 
-🔹 5. Rodar tudo junto (modo dev)
-npm run dev
-
-🛠 Configuração MySQL
+🗄️ Configuração MySQL
 
 Edite:
 
 /app/api-server/.env
 
-MYSQL_HOST=localhost
+MYSQL_HOST=seu_servidor
 MYSQL_PORT=3306
-MYSQL_USER=usuario
-MYSQL_PASSWORD=senha
-MYSQL_DATABASE=database
+MYSQL_USER=seu_usuario
+MYSQL_PASSWORD=sua_senha
+MYSQL_DATABASE=seu_database
 
-🚀 Como Usar
+▶️ Como Usar
 
-Acesse → http://localhost:3000
+Acesse:
 
-Escolha formato (CSV, XLS ou TXT)
+http://localhost:3000
+
+
+Selecione formato (CSV, XLS ou TXT)
 
 Clique em Gerar Relatório
 
-Aguarde (~3-5 minutos)
+Aguarde processamento
 
-Faça download 🎉
+Faça download
 
 🔄 Fluxo de Processamento
-🧾 1. Inserção de Dados (~2 min)
+1️⃣ Inserção de Dados (~2 min)
 
-Lê JSONs
+Lê JSONs de /backend/data
 
-Processa em chunks
+Processa em batches
 
-Insere no MySQL
+Insere em tabelas MySQL
 
-🧮 2. Query Consolidada (~30s)
+2️⃣ Query Consolidada (~30s)
+
+Executa query complexa
 
 Consolida dados
 
 Popula RELATORIO_CONSOLIDADO
 
-📁 3. Geração de Arquivo (~15–45s)
+3️⃣ Geração de Arquivo (~15–45s)
 
-Lê tabela consolidada
+Lê RELATORIO_CONSOLIDADO
 
 Gera arquivo
 
-Salva em /downloads
+Salva em /api-server/downloads
 
-✅ 4. Finalização
+4️⃣ Finalização
 
 Atualiza histórico
 
-Disponibiliza download
+Libera link para download
 
-📊 Performance
-Etapa	Tempo Médio
+📊 Performance Média
+Etapa	Tempo
 Inserção	~2 min
 Query	~30s
 CSV	~15s
 XLS	~45s
 TXT	~20s
-⏱ Total: 3–5 minutos por relatório
-🗂 Estrutura do Projeto
+Total	3–5 min
+🗂️ Estrutura do Projeto
 /app/
 ├── api-server/
-│   ├── routes/
-│   ├── controllers/
-│   ├── services/
-│   └── downloads/
 ├── backend/
 ├── query/
 ├── relatorio/
 └── frontend/
 
-🧱 Estrutura de Dados
-🗄️ Tabelas
+🛠️ Manutenção
+Alterar Query Padrão
 
-Tabelas auxiliares
+Edite:
 
-RELATORIO_CONSOLIDADO ← tabela final
+/app/query/execute_query.py
 
-🛡 Segurança
+Adicionar Novo Formato
 
-❌ Nunca commitar .env
+Criar novo generator em:
 
-🔐 Usuário MySQL com privilégios mínimos
+/relatorio/generators/
 
-📏 Limitação de tamanho de arquivo
 
-🔍 Validação de inputs
+Registrar no generate_report.py
 
-🩺 Troubleshooting
+Adicionar opção no frontend
+
+🔐 Segurança
+
+Nunca commitar .env
+
+Usar usuário MySQL com privilégios mínimos
+
+Validar inputs
+
+Controlar timeout
+
+🧪 Troubleshooting
 ❌ Python não encontrado
 which python3
 
 
-Configure:
+Configure PYTHON_PATH no .env.
 
-PYTHON_PATH=/caminho/python
-
-❌ MySQL falhou
+❌ MySQL não conecta
 mysql -h HOST -u USER -p DATABASE
+
+
+Verifique credenciais.
 
 ❌ Timeout
 JOB_TIMEOUT_MINUTES=60
@@ -223,38 +277,15 @@ JOB_TIMEOUT_MINUTES=60
 ❌ Frontend não conecta
 REACT_APP_BACKEND_URL=http://localhost:3001
 
-🔧 Manutenção
-Alterar Query
+📌 Resumo Final
 
-Editar:
-
-/app/query/execute_query.py
-
-Adicionar novo formato
-
-Criar novo generator
-
-Registrar em GENERATORS
-
-Adicionar no frontend
-
-📜 Logs
-
-API → Console
-
-Python → stderr
-
-Histórico → /api-server/data/history.json
-
-💎 Diferenciais do Projeto
-
-✔ Arquitetura modular
-✔ Processamento assíncrono
-✔ Alta escalabilidade
+✔ Sistema modular
 ✔ Separação clara de responsabilidades
-✔ Fácil manutenção futura
+✔ Escalável
+✔ Fácil manutenção
+✔ Arquitetura limpa
 
 👨‍💻 Autor
 
-Desenvolvido por Pedro Henrique
-💼 Sistema profissional de geração de relatórios empresariais
+Pedro Henrique Mendes
+Projeto profissional de geração automatizada de relatórios SQL
