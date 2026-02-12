@@ -20,14 +20,11 @@ from datetime import datetime
 import pymysql
 from dotenv import load_dotenv
 
-<<<<<<< HEAD
 # Carregar .env do backend
 backend_path = Path(__file__).parent.parent / 'backend'
 env_path = backend_path / '.env'
 load_dotenv(env_path)
 
-=======
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 # Carregar .env do api-server (para credenciais MySQL)
 api_server_path = Path(__file__).parent.parent / 'api-server'
 api_env_path = api_server_path / '.env'
@@ -46,79 +43,57 @@ MYSQL_CONFIG = {
 
 # Query padrão (exatamente como fornecida)
 QUERY_PADRAO = """
-<<<<<<< HEAD
 SELECT DISTINCT
-  SI_EXTRATO_CLIENTE_HISTORICO.billReceivableId AS Titulo,
-  SI_EXTRATO_CLIENTE_HISTORICO.Id AS ParcelaSequencial,
-  SI_EXTRATO_CLIENTE_HISTORICO.installmentNumber AS ParcelaCondicao,
-  SI_EXTRATO_CLIENTE_HISTORICO.companyId AS Codigoempresa,
-  SI_EXTRATO_CLIENTE_HISTORICO.companyName AS Empresa,
-  SI_EXTRATO_CLIENTE_HISTORICO.costCenterId AS Codcentro_de_custo,
-  SI_EXTRATO_CLIENTE_HISTORICO.costCenterName AS Centro_de_custo,
-  SI_EXTRATO_CLIENTE_HISTORICO.customerId AS Codcliente,
-  SI_EXTRATO_CLIENTE_HISTORICO.customerName AS Cliente,
-  SI_EXTRATO_CLIENTE_HISTORICO.customerDocument AS Documento,
-  SUBSTRING_INDEX(
-    SI_EXTRATO_CLIENTE_HISTORICO.document,
-    '.',
-    LENGTH(SI_EXTRATO_CLIENTE_HISTORICO.document) - LENGTH(REPLACE(SI_EXTRATO_CLIENTE_HISTORICO.document, '.', ''))
-  ) AS DocumentoProcessado,
-  SUBSTRING_INDEX(SI_EXTRATO_CLIENTE_HISTORICO.document, '.', -1) AS numdocumento,
-  sd.originId AS Origem,
-  SI_EXTRATO_CLIENTE_HISTORICO.paymentTermsId AS Tipocondicao,
-  SI_EXTRATO_CLIENTE_HISTORICO.lastRenegotiationDate AS DataEmissao,
-  SI_EXTRATO_CLIENTE_HISTORICO.dueDate AS DataVencimento,
-  sd.financialCategoryId AS numPlanoFinanceiro,
+  ech.companyId AS Codigoempresa, 
+  ech.companyName AS NomeDaEmpresa,
+  CAST(sd.costCenterId AS CHAR) AS CodigoDoCentroDeCusto, 
+  sd.costCenterName AS NomeDoCentroDeCusto,
+  CONCAT(SUBSTRING(sd.financialCategoryId,1,1),'.',
+         SUBSTRING(sd.financialCategoryId,2,2),'.',
+         SUBSTRING(sd.financialCategoryId,4,2),'.',
+         SUBSTRING(sd.financialCategoryId,6,2)) AS CodigoDoPlanoFinanceiroComMascara,
+  sd.financialCategoryId AS numPlanoFinanceiro, 
   sd.financialCategoryName AS PlanoFinanceiro,
-  SI_EXTRATO_CLIENTE_HISTORICO.receiptDate AS Datadabaixa,
-  SI_EXTRATO_CLIENTE_HISTORICO.originalValue AS Valororiginal,
-  sd.balanceAmount AS ValorPendente,
-  SI_EXTRATO_CLIENTE_HISTORICO.receiptValue AS Valordabaixa,
-  SI_EXTRATO_CLIENTE_HISTORICO.receiptExtra AS Acrescimo,
-  SI_EXTRATO_CLIENTE_HISTORICO.receiptDiscount AS Desconto,
-  (
-    COALESCE(SI_EXTRATO_CLIENTE_HISTORICO.receiptValue, 0)
-    + COALESCE(SI_EXTRATO_CLIENTE_HISTORICO.receiptExtra, 0)
-    - COALESCE(SI_EXTRATO_CLIENTE_HISTORICO.receiptDiscount, 0)
-  ) AS ValorLiquido,
-  sdr.accountNumber AS numConta
-FROM SI_EXTRATO_CLIENTE_HISTORICO
-LEFT OUTER JOIN SI_DATACOMPETPARCELAS sd
-  ON sd.companyId = SI_EXTRATO_CLIENTE_HISTORICO.companyId
- AND sd.billId = SI_EXTRATO_CLIENTE_HISTORICO.billReceivableId
- AND sd.installmentId = SI_EXTRATO_CLIENTE_HISTORICO.Id
-LEFT OUTER JOIN SI_DATAPAGTO_receipts sdr
-  ON SI_EXTRATO_CLIENTE_HISTORICO.billReceivableId = sdr.billId
- AND SI_EXTRATO_CLIENTE_HISTORICO.companyId = sdr.companyId
- AND SI_EXTRATO_CLIENTE_HISTORICO.Id = sdr.installmentId
-LEFT JOIN SI_DATAPAGTO_receiptsCategories src
-  ON src.companyId = sdr.companyId
- AND src.billId = sdr.billId
- AND src.installmentId = sdr.installmentId
-WHERE sd.financialCategoryId IS NOT NULL
-=======
-SSELECT DISTINCT
-  ech.companyId AS Codigoempresa, ech.companyName AS Empresa,
-  CAST(sd.costCenterId AS CHAR) AS CodCentrDeCusto, sd.costCenterName AS Centro_de_custo,
-  ech.customerId AS Codcliente, ech.customerName AS Cliente,
-  sd.documentIdentificationId AS CodigoDoDocumento, sd.documentNumber AS NumeroDoDocumento, sd.documentIdentificationName AS NomeDoDocumento,
-  ech.billReceivableId AS Titulo, ech.Id AS NumeroDaParcela, ech.paymentTermsDescrition AS Tipocondicao,
-  CONCAT(SUBSTRING(sd.financialCategoryId,1,1),'.',SUBSTRING(sd.financialCategoryId,2,2),'.',SUBSTRING(sd.financialCategoryId,4,2),'.',SUBSTRING(sd.financialCategoryId,6,2)) AS CodigoDoPlanoFinanceiroComMascara,
-  sd.financialCategoryId AS numPlanoFinanceiro, sd.financialCategoryName AS PlanoFinanceiro,
+  ech.customerId AS CodigoDoCliente, 
+  ech.customerName AS NomeDoCliente,
+  ech.customerDocument AS NumeroCPFCNPJ,
+  sd.documentNumber AS NumeroDoDocumento, 
+  sd.documentIdentificationName AS NomeDoDocumento,
+  ech.billReceivableId AS NumeroDoTitulo, 
+  ech.Id AS NumeroDaParcela, 
+  ech.paymentTermsDescrition AS NomeDoTipoDeCondicao,
+  ech.lastRenegotiationDate AS DataDeEmissao, 
+  ech.dueDate AS DataDeVencimento,
+  -- ✅ ALTERADAS PARA VIR COM VÍRGULA NO CSV
+  REPLACE(FORMAT(ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS ValorOriginalRateado,
+  REPLACE(FORMAT(
+    ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) -
+    ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2)
+  ,2),'.',',') AS SaldoAtual,
+  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS ValorDaBaixaRateado,
+  ech.receiptDate AS Datadabaixa,
+  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS AcrescimoRateado,
+  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS DescontoRateado,
+  REPLACE(FORMAT(
+    ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) +
+    ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) -
+    ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2)
+  ,2),'.',',') AS ValorLiquido,
   sdr.accountNumber AS numConta,
-  IF(COALESCE(ech.receiptValue,0)>0,0,ech.originalValue) AS ValorOriginal,
-  ech.dueDate AS DataVencimento, ech.lastRenegotiationDate AS DataEmissao, ech.receiptDate AS Datadabaixa,
-  ech.receiptValue AS ValorDaBaixa, ROUND(sd.financialCategoryRate,2) AS ValorRate,
-  ech.receiptExtra AS Acrescimo, ech.receiptDiscount AS Desconto,
-  ROUND(COALESCE(ech.receiptValue,0)+COALESCE(ech.receiptExtra,0)-COALESCE(ech.receiptDiscount,0),2) AS `Valor Liquido`,
-  ech.customerDocument AS DocumentoCliente
+  REPLACE(FORMAT(ROUND(sd.financialCategoryRate,2),2),'.',',') AS ValorRate,
+  IF (COALESCE(ech.receiptValue,0) = 0, "A Receber", 
+      IF (ech.originalValue > ech.receiptValue,"Pagamento Parcial", 
+          IF (ech.originalValue = ech.receiptValue,"Pagamento Total", ""))) AS StatusParcela
 FROM SI_EXTRATO_CLIENTE_HISTORICO ech
 LEFT JOIN SI_DATACOMPETPARCELAS sd
-  ON sd.companyId=ech.companyId AND sd.billId=ech.billReceivableId AND sd.installmentId=ech.Id
+  ON sd.companyId=ech.companyId 
+ AND sd.billId=ech.billReceivableId 
+ AND sd.installmentId=ech.Id
 LEFT JOIN SI_DATAPAGTO_receipts sdr
-  ON sdr.billId=ech.billReceivableId AND sdr.companyId=ech.companyId AND sdr.installmentId=ech.Id
+  ON sdr.billId=ech.billReceivableId 
+ AND sdr.companyId=ech.companyId 
+ AND sdr.installmentId=ech.Id
 WHERE sd.financialCategoryId IS NOT NULL;
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 """
 
 def criar_tabela_consolidada(cursor):
