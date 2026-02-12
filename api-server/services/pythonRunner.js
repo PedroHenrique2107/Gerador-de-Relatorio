@@ -169,7 +169,16 @@ class PythonRunner {
    */
   async runPythonScript(pythonPath, args, stepName) {
     return new Promise((resolve, reject) => {
-      const child = spawn(pythonPath, args, { cwd: PROJECT_ROOT });
+      const BACKEND_DIR = path.join(PROJECT_ROOT, 'backend');
+
+      const child = spawn(pythonPath, args, {
+        cwd: BACKEND_DIR,   // 🔥 roda dentro do backend
+        env: {
+          ...process.env,   // 🔥 repassa variáveis de ambiente
+          PYTHONUTF8: '1',  // 🔥 evita problema com "Área" -> "�rea"
+        },
+        windowsHide: true,
+      });
 
       let stdout = '';
       let stderr = '';

@@ -65,20 +65,22 @@ SELECT DISTINCT
   ech.lastRenegotiationDate AS DataDeEmissao, 
   ech.dueDate AS DataDeVencimento,
   -- ✅ ALTERADAS PARA VIR COM VÍRGULA NO CSV
-  REPLACE(FORMAT(ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS ValorOriginalRateado,
-  REPLACE(FORMAT(
+  REPLACE(REPLACE(REPLACE(FORMAT(ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0) / 100,2),2),',', '#'),'.', ','),'#', '.') AS ValorOriginalRateado,
+  -- SALDO ATUAL
+  REPLACE(REPLACE(REPLACE(FORMAT(
     ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) -
     ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2)
-  ,2),'.',',') AS SaldoAtual,
-  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS ValorDaBaixaRateado,
+  ,2),',','#'),'.', ','), '#', '.') AS SaldoAtual,
+  REPLACE(REPLACE(REPLACE(FORMAT(ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),',','#'),'.', ','), '#', '.') AS ValorDaBaixaRateado,
   ech.receiptDate AS Datadabaixa,
-  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS AcrescimoRateado,
-  REPLACE(FORMAT(ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),'.',',') AS DescontoRateado,
-  REPLACE(FORMAT(
+  REPLACE(REPLACE(REPLACE(FORMAT(ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),',','#'),'.', ','), '#', '.') AS AcrescimoRateado,
+  REPLACE(REPLACE(REPLACE(FORMAT(ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2),2),',','#'),'.', ','), '#', '.') AS DescontoRateado,
+  -- VALOR LIQUIDO
+  REPLACE(REPLACE(REPLACE(FORMAT(
     ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) +
     ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2) -
     ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0)/100,2)
-  ,2),'.',',') AS ValorLiquido,
+  ,2),',','#'),'.', ','), '#', '.') AS ValorLiquido,
   sdr.accountNumber AS numConta,
   REPLACE(FORMAT(ROUND(sd.financialCategoryRate,2),2),'.',',') AS ValorRate,
   IF (COALESCE(ech.receiptValue,0) = 0, "A Receber", 
@@ -93,7 +95,8 @@ LEFT JOIN SI_DATAPAGTO_receipts sdr
   ON sdr.billId=ech.billReceivableId 
  AND sdr.companyId=ech.companyId 
  AND sdr.installmentId=ech.Id
-WHERE sd.financialCategoryId IS NOT NULL;
+WHERE  sd.financialCategoryId IS NOT NULL;
+
 """
 
 def criar_tabela_consolidada(cursor):

@@ -13,9 +13,9 @@ from enum import Enum
 from dotenv import load_dotenv
 from urllib.parse import quote
 
-# Carrega .env no início
-load_dotenv()
-
+# Carrega backend/.env de forma determinística (independe do cwd)
+BACKEND_DIR = Path(__file__).resolve().parents[1]  # .../backend
+load_dotenv(BACKEND_DIR / ".env", override=False)
 
 class Environment(str, Enum):
     """Ambientes de execução."""
@@ -147,34 +147,16 @@ class AppConfig:
 
 
 def get_config(env: Optional[str] = None) -> AppConfig:
-    """
-    Retorna configuração com base no ambiente.
-    
-    Args:
-        env: Nome do ambiente (development, testing, production)
-             Se None, usa variável ENV ou padrão
-    
-    Returns:
-        AppConfig: Configuração da aplicação
-    """
-    from dotenv import load_dotenv
-    
-    # Carrega .env
-    load_dotenv()
-    
-    # Determina ambiente
     env = env or os.getenv("ENV", "development")
     environment = Environment(env.lower())
-    
-    # Cria configuração
+
     config = AppConfig(
         env=environment,
         debug=os.getenv("DEBUG", "false").lower() in ("true", "1", "yes"),
     )
-    
-    # Valida
+
     config.validate()
-    
+
     return config
 
 

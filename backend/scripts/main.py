@@ -10,12 +10,23 @@ Uso:
 import sys
 import os
 from pathlib import Path
+# --- BEGIN: carregar .env cedo (Windows/Node-safe) ---
+
+try:
+    from dotenv import load_dotenv
+    BACKEND_DIR = Path(__file__).resolve().parents[1]  # .../backend
+    load_dotenv(BACKEND_DIR / ".env", override=False)
+except Exception:
+    # Sem python-dotenv ou sem .env: segue e a validação vai acusar env faltando
+    pass
+# --- END: carregar .env cedo ---
+
 
 # âš ï¸ VALIDA VIRTUAL ENVIRONMENT - ANTES DE QUALQUER OUTRA IMPORTAÃ‡ÃƒO
 # Isso deve ser feito ANTES de importar modules que dependem de packages
 os.chdir(Path(__file__).parent.parent)
 
-# ValidaÃ§Ã£o simplificada inline para nÃ£o depender de imports
+# Validação simplificada inline para nÃ£o depender de imports
 if 'VIRTUAL_ENV' not in os.environ and not hasattr(sys, 'real_prefix') and sys.prefix == sys.base_prefix:
     error_msg = f"""
 â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
@@ -63,12 +74,12 @@ logger = setup_logger('main')
 
 
 def main():
-    """FunÃ§Ã£o principal."""
+    """Função principal."""
     parser = argparse.ArgumentParser(
         description='Carrega arquivos JSON em MySQL'
     )
     
-    # Modo: arquivo Ãºnico ou diretÃ³rio
+    # Modo: arquivo único ou diretório
     input_group = parser.add_mutually_exclusive_group(required=True)
     input_group.add_argument(
         '--file',
@@ -78,10 +89,10 @@ def main():
     input_group.add_argument(
         '--dir',
         type=Path,
-        help='DiretÃ³rio com arquivos JSON'
+        help='Diretório com arquivos JSON'
     )
     
-    # OpÃ§Ãµes
+    # Opções
     parser.add_argument(
         '--table',
         type=str,
@@ -91,7 +102,7 @@ def main():
         '--pattern',
         type=str,
         default='*.json',
-        help='PadrÃ£o de arquivo (default: *.json)'
+        help='Padrão de arquivo (default: *.json)'
     )
     parser.add_argument(
         '--mode',
