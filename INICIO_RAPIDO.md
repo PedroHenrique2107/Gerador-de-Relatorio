@@ -1,11 +1,11 @@
-# 🚀 Início Rápido - Sistema de Relatórios Sienge
+﻿# ðŸš€ InÃ­cio RÃ¡pido - Sistema de RelatÃ³rios Sienge
 
-## ⚠️ IMPORTANTE - Configuração MySQL
+## âš ï¸ IMPORTANTE - ConfiguraÃ§Ã£o MySQL
 
-Antes de iniciar, você precisa configurar as credenciais do MySQL:
+Antes de iniciar, vocÃª precisa configurar as credenciais do MySQL:
 
 1. Edite o arquivo `/app/api-server/.env`
-2. Preencha as seguintes variáveis:
+2. Preencha as seguintes variÃ¡veis:
 
 ```bash
 MYSQL_HOST=seu_servidor_mysql.com
@@ -15,21 +15,21 @@ MYSQL_PASSWORD=sua_senha
 MYSQL_DATABASE=seu_database
 ```
 
-## 🔧 Configuração Inicial (Uma vez apenas)
+## ðŸ”§ ConfiguraÃ§Ã£o Inicial (Uma vez apenas)
 
-### 1. Instalar dependências do API Server
+### 1. Instalar dependÃªncias do API Server
 ```bash
 cd /app/api-server
 yarn install
 ```
 
-### 2. Instalar dependências Python
+### 2. Instalar dependÃªncias Python
 ```bash
 # Query
 cd /app/query
 pip install -r requirements.txt
 
-# Relatório
+# RelatÃ³rio
 cd /app/relatorio
 pip install -r requirements.txt
 
@@ -38,16 +38,16 @@ cd /app/backend/scripts
 pip install -r requirements.txt
 ```
 
-### 3. Criar pastas necessárias
+### 3. Criar pastas necessÃ¡rias
 ```bash
 mkdir -p /app/api-server/downloads
 mkdir -p /app/api-server/logs
 mkdir -p /app/api-server/data
 ```
 
-## ▶️ Iniciar o Sistema
+## â–¶ï¸ Iniciar o Sistema
 
-### Opção 1: Iniciar separadamente
+### OpÃ§Ã£o 1: Iniciar separadamente
 
 **Terminal 1 - API Server (Node.js):**
 ```bash
@@ -63,35 +63,27 @@ yarn start
 ```
 Interface rodando em: http://localhost:3000
 
-### Opção 2: Iniciar tudo em background
+### OpÃ§Ã£o 2: Iniciar tudo em background
 ```bash
-<<<<<<< HEAD
-# API Server
-cd /app/api-server && node server.js > logs/api.log 2>&1 &
-
-# Frontend
-cd /app/frontend && yarn start &
-=======
 # FullStack
 npm run dev
 
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 ```
 
-## 🎯 Usar o Sistema
+## ðŸŽ¯ Usar o Sistema
 
 1. Acesse http://localhost:3000 no navegador
 2. Selecione o formato desejado:
-   - **CSV** - Planilha com ponto-e-vírgula
+   - **CSV** - Planilha com ponto-e-vÃ­rgula
    - **Excel** - Arquivo .xlsx
    - **TXT** - Texto formatado em colunas
-3. Clique em "Gerar Relatório Padrão"
+3. Clique em "Gerar RelatÃ³rio PadrÃ£o"
 4. Aguarde o processamento (3-5 minutos)
-5. Faça o download quando concluído
+5. FaÃ§a o download quando concluÃ­do
 
-## 🔍 Verificar Status
+## ðŸ” Verificar Status
 
-### Verificar se API está rodando
+### Verificar se API estÃ¡ rodando
 ```bash
 curl http://localhost:3001/health
 ```
@@ -106,52 +98,52 @@ Resposta esperada:
 tail -f /app/api-server/logs/api.log
 ```
 
-### Testar geração de relatório (via API)
+### Testar geraÃ§Ã£o de relatÃ³rio (via API)
 ```bash
 curl -X POST http://localhost:3001/api/reports/generate \
   -H "Content-Type: application/json" \
   -d '{"formato":"csv"}'
 ```
 
-## 📁 Estrutura de Pastas
+## ðŸ“ Estrutura de Pastas
 
 ```
 /app/
-├── api-server/          # API Node.js (porta 3001)
-│   ├── downloads/      # Arquivos gerados aqui
-│   ├── data/           # Histórico JSON
-│   └── logs/           # Logs da API
-├── backend/
-│   ├── data/           # JSONs do Sienge aqui
-│   └── scripts/        # Scripts Python existentes
-├── query/              # Executa query SQL
-├── relatorio/          # Gera arquivos CSV/XLS/TXT
-└── frontend/           # Interface React (porta 3000)
+â”œâ”€â”€ api-server/          # API Node.js (porta 3001)
+â”‚   â”œâ”€â”€ downloads/      # Arquivos gerados aqui
+â”‚   â”œâ”€â”€ data/           # HistÃ³rico JSON
+â”‚   â””â”€â”€ logs/           # Logs da API
+â”œâ”€â”€ backend/
+â”‚   â”œâ”€â”€ data/           # JSONs do Sienge aqui
+â”‚   â””â”€â”€ scripts/        # Scripts Python existentes
+â”œâ”€â”€ query/              # Executa query SQL
+â”œâ”€â”€ relatorio/          # Gera arquivos CSV/XLS/TXT
+â””â”€â”€ frontend/           # Interface React (porta 3000)
 ```
 
-## ❓ Troubleshooting
+## â“ Troubleshooting
 
 ### Erro: "ECONNREFUSED 127.0.0.1:3001"
-- API Server não está rodando
+- API Server nÃ£o estÃ¡ rodando
 - Inicie: `cd /app/api-server && node server.js`
 
 ### Erro: "MySQL connection failed"
 - Verifique credenciais em `/app/api-server/.env`
-- Teste conexão: `mysql -h HOST -u USER -p DATABASE`
+- Teste conexÃ£o: `mysql -h HOST -u USER -p DATABASE`
 
 ### Erro: "Python not found"
 - Configure `PYTHON_PATH` em `/app/api-server/.env`
 - Exemplo: `PYTHON_PATH=/usr/bin/python3`
 
-### Frontend não carrega
-- Verifique se está rodando: `curl http://localhost:3000`
+### Frontend nÃ£o carrega
+- Verifique se estÃ¡ rodando: `curl http://localhost:3000`
 - Reinicie: `cd /app/frontend && yarn start`
 
-### Relatório não gera
+### RelatÃ³rio nÃ£o gera
 - Verifique logs: `tail -f /app/api-server/logs/api.log`
 - Verifique se JSONs existem em `/app/backend/data/`
 
-## 🛠️ Arquivos de Configuração
+## ðŸ› ï¸ Arquivos de ConfiguraÃ§Ã£o
 
 ### `/app/api-server/.env`
 ```bash
@@ -165,11 +157,11 @@ MYSQL_DATABASE=
 
 ### `/app/frontend/.env`
 ```bash
-# URL da API (não alterar)
+# URL da API (nÃ£o alterar)
 REACT_APP_BACKEND_URL=http://localhost:3001
 ```
 
-## 📊 Arquivos JSON Esperados
+## ðŸ“Š Arquivos JSON Esperados
 
 Coloque seus arquivos JSON na pasta `/app/backend/data/`:
 - EXTRATO_CLIENTE_HISTORICO.json
@@ -190,17 +182,17 @@ Formato esperado:
 }
 ```
 
-## 🎓 Próximos Passos
+## ðŸŽ“ PrÃ³ximos Passos
 
-1. ✅ Configure MySQL em `/app/api-server/.env`
-2. ✅ Coloque seus JSONs em `/app/backend/data/`
-3. ✅ Inicie API Server: `cd /app/api-server && node server.js`
-4. ✅ Inicie Frontend: `cd /app/frontend && yarn start`
-5. ✅ Acesse http://localhost:3000 e gere seu primeiro relatório!
+1. âœ… Configure MySQL em `/app/api-server/.env`
+2. âœ… Coloque seus JSONs em `/app/backend/data/`
+3. âœ… Inicie API Server: `cd /app/api-server && node server.js`
+4. âœ… Inicie Frontend: `cd /app/frontend && yarn start`
+5. âœ… Acesse http://localhost:3000 e gere seu primeiro relatÃ³rio!
 
-## 📚 Documentação Completa
+## ðŸ“š DocumentaÃ§Ã£o Completa
 
-- `/app/README.md` - Documentação geral do sistema
-- `/app/api-server/README.md` - Documentação da API
-- `/app/query/README.md` - Documentação do módulo Query
-- `/app/relatorio/README.md` - Documentação do módulo Relatório
+- `/app/README.md` - DocumentaÃ§Ã£o geral do sistema
+- `/app/api-server/README.md` - DocumentaÃ§Ã£o da API
+- `/app/query/README.md` - DocumentaÃ§Ã£o do mÃ³dulo Query
+- `/app/relatorio/README.md` - DocumentaÃ§Ã£o do mÃ³dulo RelatÃ³rio

@@ -1,4 +1,4 @@
-// craco.config.js
+﻿// craco.config.js
 const path = require("path");
 require("dotenv").config();
 
@@ -9,12 +9,8 @@ const isDevServer = process.env.NODE_ENV !== "production";
 // Environment variable overrides
 const config = {
   enableHealthCheck: process.env.ENABLE_HEALTH_CHECK === "true",
-<<<<<<< HEAD
-  enableVisualEdits: isDevServer, // Only enable during dev server
-=======
   enableVisualEdits:
     isDevServer && process.env.ENABLE_VISUAL_EDITS === "true", // default off
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
 };
 
 // Conditionally load visual edits modules only in dev mode

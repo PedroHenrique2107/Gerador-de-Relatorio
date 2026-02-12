@@ -1,4 +1,4 @@
-2026-02-03 17:47:31,873 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
+Ôªø2026-02-03 17:47:31,873 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
 2026-02-03 17:47:31,881 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
 2026-02-03 17:48:14,853 - rebuild_smart_denorm - [32mINFO[0m - 
 ============================================================
@@ -47,8 +47,8 @@
 2026-02-03 17:49:53,512 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 19378
 2026-02-03 17:49:54,096 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 19378 registros
 2026-02-03 17:49:54,097 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datacompetparcelas
-2026-02-03 17:49:54,098 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine n„o inicializado. Chame DatabaseManager.initialize() primeiro.
-2026-02-03 17:49:54,099 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: Engine n„o inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,098 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine n√£o inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,099 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datacompetparcelas: Engine n√£o inicializado. Chame DatabaseManager.initialize() primeiro.
 
 2026-02-03 17:49:54,188 - rebuild_smart_denorm - [32mINFO[0m - 
 ============================================================
@@ -58,8 +58,8 @@
 2026-02-03 17:49:54,455 - rebuild_smart_denorm - [32mINFO[0m - Total de registros: 3505
 2026-02-03 17:49:54,581 - rebuild_smart_denorm - [32mINFO[0m - Desagrupamento concluido: 3505 registros
 2026-02-03 17:49:54,583 - rebuild_smart_denorm - [32mINFO[0m - Deletando tabela antiga: parcelas_contareceber_datapagtoparcelas
-2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine n„o inicializado. Chame DatabaseManager.initialize() primeiro.
-2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: Engine n„o inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao deletar tabela: Engine n√£o inicializado. Chame DatabaseManager.initialize() primeiro.
+2026-02-03 17:49:54,584 - rebuild_smart_denorm - [31mERROR[0m - Erro ao processar parcelas_contareceber_datapagtoparcelas: Engine n√£o inicializado. Chame DatabaseManager.initialize() primeiro.
 
 2026-02-03 17:49:54,610 - rebuild_smart_denorm - [32mINFO[0m - ============================================================
 2026-02-03 17:49:54,611 - rebuild_smart_denorm - [32mINFO[0m - RECONSTRUCAO CONCLUIDA

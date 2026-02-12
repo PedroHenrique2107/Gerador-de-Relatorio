@@ -1,18 +1,18 @@
-# 📊 Normalização do ExtratoClienteHistórico
+﻿# ðŸ“Š NormalizaÃ§Ã£o do ExtratoClienteHistÃ³rico
 
 ## O Problema
 
-O JSON original `ExtratoClienteHistorico.json` tem uma estrutura **aninhada/hierárquica**:
+O JSON original `ExtratoClienteHistorico.json` tem uma estrutura **aninhada/hierÃ¡rquica**:
 
 ```
 1 documento
-  └── 10 parcelas (array colapsado no DBForge)
-      └── N pagamentos (array colapsado no DBForge)
+  â””â”€â”€ 10 parcelas (array colapsado no DBForge)
+      â””â”€â”€ N pagamentos (array colapsado no DBForge)
 ```
 
-Quando importado no DBForge, os arrays ficam "colapsados" - você não consegue ver cada parcela como uma linha separada, dificultando análises e relatórios.
+Quando importado no DBForge, os arrays ficam "colapsados" - vocÃª nÃ£o consegue ver cada parcela como uma linha separada, dificultando anÃ¡lises e relatÃ³rios.
 
-## A Solução
+## A SoluÃ§Ã£o
 
 O script `scripts/normalize_extrato.py` **desnormaliza** o JSON em **3 tabelas relacionadas**:
 
@@ -44,62 +44,62 @@ receiptId | billReceivableId | installmentId | date       | value
 
 ## Como Usar
 
-### 1️⃣ Teste Primeiro (Sem MySQL)
+### 1ï¸âƒ£ Teste Primeiro (Sem MySQL)
 
 ```bash
 # Ativa a venv
 .venv\Scripts\activate
 
-# Testa a normalização sem inserir no MySQL
+# Testa a normalizaÃ§Ã£o sem inserir no MySQL
 python test_normalize.py
 ```
 
-**Saída esperada:**
+**SaÃ­da esperada:**
 ```
-✓ NORMALIZAÇÃO CONCLUÍDA COM SUCESSO!
+âœ“ NORMALIZAÃ‡ÃƒO CONCLUÃDA COM SUCESSO!
 
-📊 RESULTADO:
-  • billsReceivables: 7,039 documentos
-  • installments:     18,885 parcelas
-  • receipts:         18,900 pagamentos
+ðŸ“Š RESULTADO:
+  â€¢ billsReceivables: 7,039 documentos
+  â€¢ installments:     18,885 parcelas
+  â€¢ receipts:         18,900 pagamentos
 ```
 
-### 2️⃣ Execute com MySQL
+### 2ï¸âƒ£ Execute com MySQL
 
 ```bash
 .venv\Scripts\activate
 python scripts/normalize_extrato.py
 ```
 
-**Saída esperada:**
+**SaÃ­da esperada:**
 ```
 ======================================================================
 NORMALIZANDO ExtratoClienteHistorico.json
 ======================================================================
 
-✓ Carregado: 7039 registros
-✓ Normalização completa:
-  • billsReceivables: 7039 registros
-  • installments: 18885 registros
-  • receipts: 18900 registros
+âœ“ Carregado: 7039 registros
+âœ“ NormalizaÃ§Ã£o completa:
+  â€¢ billsReceivables: 7039 registros
+  â€¢ installments: 18885 registros
+  â€¢ receipts: 18900 registros
 
 ======================================================================
-✅ NORMALIZAÇÃO CONCLUÍDA COM SUCESSO!
+âœ… NORMALIZAÃ‡ÃƒO CONCLUÃDA COM SUCESSO!
 ======================================================================
 
-📊 RESULTADO:
-  • billsReceivables: 7,039 documentos
-  • installments:     18,885 parcelas (VISÍVEIS NO DBFORGE)
-  • receipts:         18,900 pagamentos
+ðŸ“Š RESULTADO:
+  â€¢ billsReceivables: 7,039 documentos
+  â€¢ installments:     18,885 parcelas (VISÃVEIS NO DBFORGE)
+  â€¢ receipts:         18,900 pagamentos
 
-🔗 RELACIONAMENTOS:
-  • installments → billsReceivables (billReceivableId)
-  • receipts → billsReceivables (billReceivableId)
+ðŸ”— RELACIONAMENTOS:
+  â€¢ installments â†’ billsReceivables (billReceivableId)
+  â€¢ receipts â†’ billsReceivables (billReceivableId)
 
-💡 NO DBFORGE, AGORA VOCÊ VÊ:
-  ✓ Cada parcela como UMA LINHA separada (não mais colapsada)
-  ✓ Cada pagamento como UMA LINHA separada
-  ✓ Todos os 7,039 clientes com dados desnormalizados
+ðŸ’¡ NO DBFORGE, AGORA VOCÃŠ VÃŠ:
+  âœ“ Cada parcela como UMA LINHA separada (nÃ£o mais colapsada)
+  âœ“ Cada pagamento como UMA LINHA separada
+  âœ“ Todos os 7,039 clientes com dados desnormalizados
 ```
 
 ## Resultado no DBForge
@@ -110,7 +110,7 @@ billReceivableId | companyName | installments (COLAPSADO)
 2                | SC1 FUNDO...| [{"installmentNumber":"1/10"...}, {"installmentNumber":"2/10"...}, ...]
 ```
 
-### Depois (Normalizado - VISÍVEL)
+### Depois (Normalizado - VISÃVEL)
 ```
 installments view (expandida):
 billReceivableId | installmentNumber | dueDate    | originalValue
@@ -120,52 +120,52 @@ billReceivableId | installmentNumber | dueDate    | originalValue
 ...
 ```
 
-## Estatísticas do Dataset
+## EstatÃ­sticas do Dataset
 
-| Métrica | Quantidade |
+| MÃ©trica | Quantidade |
 |---------|-----------|
 | Documentos (billsReceivables) | 7.039 |
 | Parcelas (installments) | 18.885 |
 | Pagamentos (receipts) | 18.900 |
-| Média de parcelas por documento | 2,7 |
+| MÃ©dia de parcelas por documento | 2,7 |
 
-## Campos Disponíveis
+## Campos DisponÃ­veis
 
 ### billsReceivables
-- `billReceivableId`: ID único do documento
+- `billReceivableId`: ID Ãºnico do documento
 - `companyId`, `companyName`: Fundo de investimento
 - `costCenterId`, `costCenterName`: Centro de custo
 - `customerId`, `customerName`, `customerDocument`: Dados do cliente
-- `emissionDate`: Data de emissão
-- `document`: Número do documento
-- `privateArea`: Área privada
+- `emissionDate`: Data de emissÃ£o
+- `document`: NÃºmero do documento
+- `privateArea`: Ãrea privada
 - `oldestInstallmentDate`: Data da parcela mais antiga
-- `revokedBillReceivableDate`: Data de revogação (se houver)
+- `revokedBillReceivableDate`: Data de revogaÃ§Ã£o (se houver)
 
 ### installments
 - `billReceivableId`: FK para billsReceivables
-- `installmentId`: ID único da parcela
-- `installmentNumber`: Número da parcela (ex: "1/10", "2/10")
-- `baseDate`: Data base para cálculo
+- `installmentId`: ID Ãºnico da parcela
+- `installmentNumber`: NÃºmero da parcela (ex: "1/10", "2/10")
+- `baseDate`: Data base para cÃ¡lculo
 - `dueDate`: Data de vencimento
 - `originalValue`: Valor original
 - `currentBalance`: Saldo atual
-- `currentBalanceWithAddition`: Saldo com adições
-- `installmentSituation`: Situação da parcela
+- `currentBalanceWithAddition`: Saldo com adiÃ§Ãµes
+- `installmentSituation`: SituaÃ§Ã£o da parcela
 - `generatedBillet`: Se gerou boleto
 
 ### receipts
-- `receiptId`: ID único do pagamento
+- `receiptId`: ID Ãºnico do pagamento
 - `billReceivableId`: FK para billsReceivables
 - `installmentId`: FK para installments
 - `date`: Data do pagamento
 - `value`: Valor pago
 - `discount`: Desconto concedido
 - `extra`: Juros/multa
-- `netReceipt`: Valor líquido recebido
+- `netReceipt`: Valor lÃ­quido recebido
 - `type`: Tipo de recebimento
 
-## Consultas Úteis
+## Consultas Ãšteis
 
 ### Parcelas pendentes de pagamento
 ```sql
@@ -212,28 +212,28 @@ ORDER BY i.dueDate ASC;
 
 ## Troubleshooting
 
-### Erro: "Arquivo não encontrado: data/ExtratoClienteHistorico.json"
-- Verifique se o arquivo está em `./data/`
-- O caminho é relativo ao diretório do projeto
+### Erro: "Arquivo nÃ£o encontrado: data/ExtratoClienteHistorico.json"
+- Verifique se o arquivo estÃ¡ em `./data/`
+- O caminho Ã© relativo ao diretÃ³rio do projeto
 
 ### Erro: "Falha ao conectar no banco de dados"
 - Verifique o arquivo `.env` com as credenciais do MySQL
-- Teste a conexão: `python scripts/main.py --help`
+- Teste a conexÃ£o: `python scripts/main.py --help`
 
 ### Erro: "ModuleNotFoundError: No module named 'app'"
-- Verifique se a venv está ativada: `source .venv/bin/activate`
-- Execute do diretório raiz do projeto
+- Verifique se a venv estÃ¡ ativada: `source .venv/bin/activate`
+- Execute do diretÃ³rio raiz do projeto
 
-## Próximas Etapas
+## PrÃ³ximas Etapas
 
-1. ✅ Testar normalização (test_normalize.py)
-2. ✅ Carregar em MySQL (scripts/normalize_extrato.py)
-3. 🔄 Criar índices para performance
-4. 🔄 Visualizar em DBForge (agora com dados normalizados)
-5. 🔄 Criar reports e dashboards
+1. âœ… Testar normalizaÃ§Ã£o (test_normalize.py)
+2. âœ… Carregar em MySQL (scripts/normalize_extrato.py)
+3. ðŸ”„ Criar Ã­ndices para performance
+4. ðŸ”„ Visualizar em DBForge (agora com dados normalizados)
+5. ðŸ”„ Criar reports e dashboards
 
 ---
 
 **Criado em:** 28/01/2026  
-**Última atualização:** 28/01/2026  
-**Status:** ✅ Produção
+**Ãšltima atualizaÃ§Ã£o:** 28/01/2026  
+**Status:** âœ… ProduÃ§Ã£o

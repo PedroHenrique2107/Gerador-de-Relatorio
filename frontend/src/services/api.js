@@ -1,9 +1,5 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
-<<<<<<< HEAD
-const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001',
-=======
 const runtimeBackendUrl = `${window.location.protocol}//${window.location.hostname}:3001`;
 const envBackendUrl = process.env.REACT_APP_BACKEND_URL;
 const isAccessingFromLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
@@ -16,14 +12,13 @@ export const BACKEND_BASE_URL = (envBackendUrl && !(envPointsToLocalhost && !isA
 
 const api = axios.create({
   baseURL: BACKEND_BASE_URL,
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-// Interceptor de requisição
+// Interceptor de requisiÃ§Ã£o
 api.interceptors.request.use(
   (config) => {
     return config;
@@ -43,10 +38,10 @@ api.interceptors.response.use(
       // Servidor respondeu com erro
       return Promise.reject(new Error(error.response.data.error || 'Erro no servidor'));
     } else if (error.request) {
-      // Requisição foi feita mas sem resposta
+      // RequisiÃ§Ã£o foi feita mas sem resposta
       return Promise.reject(new Error('Sem resposta do servidor'));
     } else {
-      // Erro na configuração da requisição
+      // Erro na configuraÃ§Ã£o da requisiÃ§Ã£o
       return Promise.reject(error);
     }
   }

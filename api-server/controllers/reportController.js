@@ -1,50 +1,15 @@
-<<<<<<< HEAD
-const jobManager = require('../services/jobManager');
-const historyManager = require('../services/historyManager');
-const logger = require('../utils/logger');
+﻿// Controller responsÃ¡vel por iniciar geraÃ§Ã£o de relatÃ³rios,
+// consultar status de jobs e retornar histÃ³rico.
+// NÃƒO gera arquivos diretamente â€” apenas gerencia requisiÃ§Ãµes HTTP.
 
-/**
- * POST /api/reports/generate
- * Cria novo job de geração de relatório
- */
-exports.generateReport = async (req, res) => {
-  try {
-    const { formato } = req.body;
-    
-    // Validar formato
-    if (!formato || !['csv', 'xls', 'txt'].includes(formato)) {
-      return res.status(400).json({ 
-        error: 'Formato inválido. Use: csv, xls ou txt' 
-      });
-    }
-    
-    // Criar job
-    const job = jobManager.createJob(formato);
-    
-    logger.info(`Relatório solicitado: ${job.jobId} - Formato: ${formato}`);
-    
-    res.json({
-      jobId: job.jobId,
-      status: job.status,
-      message: 'Relatório sendo gerado...',
-      createdAt: job.timing.startTime
-    });
-    
-  } catch (error) {
-    logger.error(`Erro ao gerar relatório: ${error.message}`);
-=======
-// Controller responsável por iniciar geração de relatórios,
-// consultar status de jobs e retornar histórico.
-// NÃO gera arquivos diretamente — apenas gerencia requisições HTTP.
-
-const jobManager = require('../services/jobManager');      // Serviço que cria e controla jobs de relatório
-const historyManager = require('../services/historyManager'); // Serviço que retorna histórico de relatórios
-const logger = require('../utils/logger');                 // Logger centralizado da aplicação
+const jobManager = require('../services/jobManager');      // ServiÃ§o que cria e controla jobs de relatÃ³rio
+const historyManager = require('../services/historyManager'); // ServiÃ§o que retorna histÃ³rico de relatÃ³rios
+const logger = require('../utils/logger');                 // Logger centralizado da aplicaÃ§Ã£o
 
 /**
  * POST /reports
- * Cria um novo job de geração de relatório.
- * Retorna imediatamente o jobId para acompanhamento assíncrono.
+ * Cria um novo job de geraÃ§Ã£o de relatÃ³rio.
+ * Retorna imediatamente o jobId para acompanhamento assÃ­ncrono.
  */
 exports.generateReport = async (req, res) => {
   try {
@@ -53,20 +18,20 @@ exports.generateReport = async (req, res) => {
     // Normaliza xlsx para xls (sistema trata ambos como o mesmo tipo)
     const formatoNormalizado = formato === 'xlsx' ? 'xls' : formato;
 
-    // Validação de formato permitido
+    // ValidaÃ§Ã£o de formato permitido
     if (!formatoNormalizado || !['csv', 'xls', 'txt'].includes(formatoNormalizado)) {
       return res.status(400).json({
         error: 'Formato invalido. Use: csv, xls/xlsx ou txt'
       });
     }
 
-    // Cria job assíncrono de geração
+    // Cria job assÃ­ncrono de geraÃ§Ã£o
     const job = jobManager.createJob(formatoNormalizado, { syncBeforeRun });
 
     // Log para auditoria e debug futuro
     logger.info(`Relatorio solicitado: ${job.jobId} - Formato: ${formatoNormalizado}`);
 
-    // Retorna dados mínimos para o cliente acompanhar o processamento
+    // Retorna dados mÃ­nimos para o cliente acompanhar o processamento
     res.json({
       jobId: job.jobId,
       status: job.status,
@@ -75,42 +40,25 @@ exports.generateReport = async (req, res) => {
     });
 
   } catch (error) {
-    // Erro inesperado na criação do job
+    // Erro inesperado na criaÃ§Ã£o do job
     logger.error(`Erro ao gerar relatorio: ${error.message}`);
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
     res.status(500).json({ error: error.message });
   }
 };
 
 /**
-<<<<<<< HEAD
- * GET /api/reports/jobs/:jobId
- * Retorna status de um job
-=======
  * GET /reports/jobs/:jobId
- * Retorna o status completo de um job específico.
+ * Retorna o status completo de um job especÃ­fico.
  * Usado pelo frontend para acompanhar progresso.
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
  */
 exports.getJobStatus = (req, res) => {
   try {
     const { jobId } = req.params;
-<<<<<<< HEAD
-    
-    const job = jobManager.getJob(jobId);
-    
-    if (!job) {
-      return res.status(404).json({ error: 'Job não encontrado' });
-    }
-    
-    res.json(job);
-    
-=======
 
     // Busca job pelo ID
     const job = jobManager.getJob(jobId);
 
-    // Se não existir, retorna 404
+    // Se nÃ£o existir, retorna 404
     if (!job) {
       return res.status(404).json({ error: 'Job nao encontrado' });
     }
@@ -118,7 +66,6 @@ exports.getJobStatus = (req, res) => {
     // Retorna objeto completo do job
     res.json(job);
 
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
   } catch (error) {
     logger.error(`Erro ao buscar status do job: ${error.message}`);
     res.status(500).json({ error: error.message });
@@ -126,31 +73,19 @@ exports.getJobStatus = (req, res) => {
 };
 
 /**
-<<<<<<< HEAD
- * GET /api/reports/history
- * Retorna histórico de relatórios
-=======
  * GET /reports/history
- * Retorna histórico de relatórios já processados.
- * Normalmente usado para exibir últimos relatórios gerados.
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
+ * Retorna histÃ³rico de relatÃ³rios jÃ¡ processados.
+ * Normalmente usado para exibir Ãºltimos relatÃ³rios gerados.
  */
 exports.getHistory = async (req, res) => {
   try {
     const history = await historyManager.getHistory();
-<<<<<<< HEAD
-    res.json(history);
-    
-  } catch (error) {
-    logger.error(`Erro ao buscar histórico: ${error.message}`);
-=======
 
-    // Retorna lista de relatórios anteriores
+    // Retorna lista de relatÃ³rios anteriores
     res.json(history);
 
   } catch (error) {
     logger.error(`Erro ao buscar historico: ${error.message}`);
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
     res.status(500).json({ error: error.message });
   }
 };

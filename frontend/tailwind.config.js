@@ -1,99 +1,15 @@
-<<<<<<< HEAD
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-    darkMode: ["class"],
-    content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html"
-  ],
-  theme: {
-  	extend: {
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		},
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		keyframes: {
-  			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
-  			},
-  			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
-  		},
-  		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
-  	}
-  },
-  plugins: [require("tailwindcss-animate")],
-};
-=======
-/**
+﻿/**
  * tailwind.config.js
  *
- * Arquivo de configuração do TailwindCSS.
+ * Arquivo de configuraÃ§Ã£o do TailwindCSS.
  * Aqui definimos:
  * - Onde o Tailwind deve procurar classes (content)
- * - Tema customizado (cores, radius, animações)
+ * - Tema customizado (cores, radius, animaÃ§Ãµes)
  * - Plugins adicionais
  *
- * ⚠️ Se for fazer manutenção no futuro:
- * - Alterações visuais globais (cores, radius, animações) devem ser feitas aqui.
- * - Evite colocar valores fixos nos componentes se já existir variável aqui.
+ * âš ï¸ Se for fazer manutenÃ§Ã£o no futuro:
+ * - AlteraÃ§Ãµes visuais globais (cores, radius, animaÃ§Ãµes) devem ser feitas aqui.
+ * - Evite colocar valores fixos nos componentes se jÃ¡ existir variÃ¡vel aqui.
  */
 
 /** @type {import('tailwindcss').Config} */
@@ -108,7 +24,7 @@ module.exports = {
   /**
    * Arquivos onde o Tailwind vai procurar classes.
    * Se criar novas pastas (ex: components, layouts),
-   * adicione aqui para não quebrar o purge.
+   * adicione aqui para nÃ£o quebrar o purge.
    */
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -119,8 +35,8 @@ module.exports = {
     extend: {
 
       /**
-       * Border radius customizado usando variável CSS (--radius).
-       * Permite mudar o arredondamento global apenas alterando a variável.
+       * Border radius customizado usando variÃ¡vel CSS (--radius).
+       * Permite mudar o arredondamento global apenas alterando a variÃ¡vel.
        */
       borderRadius: {
         lg: 'var(--radius)',
@@ -129,12 +45,12 @@ module.exports = {
       },
 
       /**
-       * Sistema de cores baseado em variáveis CSS (HSL).
+       * Sistema de cores baseado em variÃ¡veis CSS (HSL).
        * Isso permite:
-       * - Troca dinâmica de tema (light/dark)
-       * - Fácil manutenção futura
+       * - Troca dinÃ¢mica de tema (light/dark)
+       * - FÃ¡cil manutenÃ§Ã£o futura
        *
-       * ⚠️ As variáveis (--background, --primary, etc.)
+       * âš ï¸ As variÃ¡veis (--background, --primary, etc.)
        * devem existir no CSS global (ex: index.css).
        */
       colors: {
@@ -181,7 +97,7 @@ module.exports = {
         ring: 'hsl(var(--ring))',
 
         /**
-         * Cores específicas para gráficos.
+         * Cores especÃ­ficas para grÃ¡ficos.
          * Pode ser usado com bibliotecas de chart.
          */
         chart: {
@@ -194,7 +110,7 @@ module.exports = {
       },
 
       /**
-       * Animações personalizadas (usadas normalmente com Radix UI Accordion).
+       * AnimaÃ§Ãµes personalizadas (usadas normalmente com Radix UI Accordion).
        * Controlam abertura e fechamento suave.
        */
       keyframes: {
@@ -209,8 +125,8 @@ module.exports = {
       },
 
       /**
-       * Define como as animações serão usadas.
-       * Duração: 0.2s
+       * Define como as animaÃ§Ãµes serÃ£o usadas.
+       * DuraÃ§Ã£o: 0.2s
        * Easing: ease-out
        */
       animation: {
@@ -222,10 +138,9 @@ module.exports = {
 
   /**
    * Plugins extras do Tailwind.
-   * tailwindcss-animate adiciona utilitários de animação.
+   * tailwindcss-animate adiciona utilitÃ¡rios de animaÃ§Ã£o.
    *
-   * ⚠️ Se remover esse plugin, animações podem parar de funcionar.
+   * âš ï¸ Se remover esse plugin, animaÃ§Ãµes podem parar de funcionar.
    */
   plugins: [require("tailwindcss-animate")],
 };
->>>>>>> 539d0c7 (versão completa do gerador de relatórios)
