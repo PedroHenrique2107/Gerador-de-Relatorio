@@ -10,6 +10,7 @@ import './Dashboard.css';
 
 function Dashboard() {
   const [formato, setFormato] = useState('csv');
+  const [syncBeforeRun, setSyncBeforeRun] = useState(false);
   const [currentJobId, setCurrentJobId] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState(null);
@@ -22,7 +23,10 @@ function Dashboard() {
       setError(null);
       setIsGenerating(true);
       
-      const response = await api.post('/api/reports/generate', { formato });
+      const response = await api.post('/api/reports/generate', {
+        formato,
+        syncBeforeRun,
+      });
       setCurrentJobId(response.data.jobId);
       
     } catch (error) {
@@ -74,6 +78,16 @@ function Dashboard() {
               onChange={setFormato}
               disabled={isGenerating}
             />
+
+            <label className="sync-option">
+              <input
+                type="checkbox"
+                checked={syncBeforeRun}
+                onChange={(e) => setSyncBeforeRun(e.target.checked)}
+                disabled={isGenerating}
+              />
+              <span>Sincronizar dados do Sienge</span>
+            </label>
             
             <GenerateButton 
               onClick={handleGenerate}

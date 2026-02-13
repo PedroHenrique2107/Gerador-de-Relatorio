@@ -47,7 +47,7 @@ function HistoryItem({ item }) {
   };
   
   const badge = getFormatBadge(item.formato);
-  
+// Neste retorno tem a edição do status do relatório, se ele foi concluído ou falhou, e também tem o link para download caso o relatório tenha sido concluído. O código também formata a data de criação do relatório e exibe informações adicionais como contagem de registros, tamanho do arquivo e tempo de processamento.
   return (
     <div className="history-item" data-testid="history-item">
       <div className="history-icon">
@@ -71,9 +71,9 @@ function HistoryItem({ item }) {
           </div>
           <div className="history-meta">
             <span data-testid="record-count">{item.recordCount?.toLocaleString()} registros</span>
-            <span>â€¢</span>
+            <span>&bull;</span>
             <span data-testid="file-size">{item.fileSize}</span>
-            <span>â€¢</span>
+            <span>&bull;</span>
             <span data-testid="processing-time">{item.processingTime}</span>
           </div>
         </div>
@@ -85,7 +85,7 @@ function HistoryItem({ item }) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-                Concluído
+                Concluído 
               </span>
               <a 
                 href={`${BACKEND_BASE_URL}${item.downloadUrl}`}
