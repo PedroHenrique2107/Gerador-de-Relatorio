@@ -23,3 +23,47 @@
 2026-02-11 11:50:10,327 - main - [32mINFO[0m - Carregando diretório: C:\Users\PedroMendes\Downloads\Teste2\GeradorRelatório - Copia\backend\data
 2026-02-11 11:56:29,502 - main - [32mINFO[0m - Carregando diretório: C:\Users\PedroMendes\Downloads\Teste2\GeradorRelatório - Copia\backend\data
 2026-02-11 12:35:07,140 - main - [32mINFO[0m - Carregando diretório: C:\Users\PedroMendes\Downloads\Teste2\GeradorRelatório - Copia\backend\data
+2026-02-12 16:43:51,478 - main - [31mERROR[0m - Erro: Falha ao conectar no banco de dados
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\scripts\main.py", line 157, in main
+    app = JSONMySQLApplication(app_config)
+  File "C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\app\application.py", line 58, in __init__
+    raise RuntimeError("Falha ao conectar no banco de dados")
+RuntimeError: Falha ao conectar no banco de dados
+2026-02-12 16:54:44,640 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 17:00:00,658 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 17:03:30,842 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 17:13:39,491 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 17:27:59,834 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 17:43:59,912 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-12 18:01:31,835 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 00:59:59,702 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 01:11:09,930 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 01:20:58,454 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 01:24:37,824 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 01:29:16,501 - main - [32mINFO[0m - Carregando diretório: backend\data
+2026-02-13 01:29:16,504 - main - [31mERROR[0m - Nenhum arquivo encontrado: backend\data/*.json
+2026-02-13 01:29:34,780 - main - [32mINFO[0m - Carregando diretório: C:\Users\PedroMendes\�rea de Trabalho\Aplica��es\GeradorRelat�rio\backend\data
+2026-02-13 01:31:11,148 - main - [32mINFO[0m - Carregando arquivo: C:\Users\PedroMendes\�rea de Trabalho\Aplica��es\GeradorRelat�rio\backend\data\PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-13 01:32:08,125 - main - [31mERROR[0m - Erro: 'charmap' codec can't encode character '\u2713' in position 11: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\�rea de Trabalho\Aplica��es\GeradorRelat�rio\backend\scripts\main.py", line 175, in main
+    print(f"Resultado: {result}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PedroMendes\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 11: character maps to <undefined>
+2026-02-13 01:32:32,209 - main - [31mERROR[0m - Erro: 'charmap' codec can't encode character '\u2713' in position 5: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\PedroMendes\�rea de Trabalho\Aplica��es\GeradorRelat�rio\backend\scripts\main.py", line 197, in main
+    print(f"  {'OK' if result.success else 'ERRO'} {result}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PedroMendes\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 5: character maps to <undefined>
+2026-02-13 01:33:59,948 - main - [32mINFO[0m - Carregando arquivo: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data\PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-13 01:34:32,786 - main - [32mINFO[0m - Carregando arquivo: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data\PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
+2026-02-13 01:35:54,093 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 01:46:11,659 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data

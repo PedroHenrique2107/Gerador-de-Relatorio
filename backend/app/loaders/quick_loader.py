@@ -304,41 +304,47 @@ class QuickLoader(BaseLoader):
             try:
                 # Garante colunas antes de inserir (preserva dados existentes)
                 self._ensure_table_columns(engine, table_name, df)
-
-                df.to_sql(
-                    table_name,
-                    con=engine,
-                    if_exists=if_exists,
-                    index=False,
-                    method='multi',
-                    chunksize=chunk_size,
-                )
-                rows_inserted = len(df)
-                logger.info(f"✓ Inseridos: {rows_inserted} registros")
-
-                # Insere tabelas filhas
-                for child_table, rows in split.items():
-                    if child_table == "main":
-                        continue
-                    if not rows:
-                        continue
-                    child_df = pd.DataFrame(rows)
-                    self._ensure_table_columns(engine, child_table, child_df)
-                    child_df.to_sql(
-                        child_table,
-                        con=engine,
+                # Usa uma conexão transacional explícita para garantir rollback em erro.
+                with engine.begin() as conn:
+                    df.to_sql(
+                        table_name,
+                        con=conn,
                         if_exists=if_exists,
                         index=False,
                         method='multi',
                         chunksize=chunk_size,
                     )
-                    logger.info(
-                        f"✓ Inseridos: {len(child_df)} registros em {child_table}"
-                    )
+                    rows_inserted = len(df)
+                    logger.info(f"✓ Inseridos: {rows_inserted} registros")
+
+                    # Insere tabelas filhas
+                    for child_table, rows in split.items():
+                        if child_table == "main":
+                            continue
+                        if not rows:
+                            continue
+                        child_df = pd.DataFrame(rows)
+                        self._ensure_table_columns(engine, child_table, child_df)
+                        child_df.to_sql(
+                            child_table,
+                            con=conn,
+                            if_exists=if_exists,
+                            index=False,
+                            method='multi',
+                            chunksize=chunk_size,
+                        )
+                        logger.info(
+                            f"✓ Inseridos: {len(child_df)} registros em {child_table}"
+                        )
             
             except Exception as e:
                 logger.error(f"✗ Erro na inserção: {e}")
                 rows_failed = len(df)
+                # Evita reutilização de conexão inválida no próximo arquivo/job.
+                try:
+                    engine.dispose()
+                except Exception:
+                    pass
                 raise LoaderError(str(e))
             
             end_time = datetime.now()

@@ -48,6 +48,8 @@ class DatabaseManager:
                 max_overflow=kwargs.get('max_overflow', 20),
                 pool_timeout=kwargs.get('pool_timeout', 30),
                 pool_recycle=kwargs.get('pool_recycle', 3600),
+                pool_pre_ping=kwargs.get('pool_pre_ping', True),
+                pool_reset_on_return=kwargs.get('pool_reset_on_return', 'rollback'),
                 echo=kwargs.get('echo', False),
                 future=True,
             )

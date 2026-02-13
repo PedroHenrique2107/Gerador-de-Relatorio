@@ -10,6 +10,13 @@ Uso:
 import sys
 import os
 from pathlib import Path
+
+# Evita crashes de encoding no Windows ao imprimir logs/resultados.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
 # --- BEGIN: carregar .env cedo (Windows/Node-safe) ---
 
 try:

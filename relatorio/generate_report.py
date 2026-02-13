@@ -14,13 +14,14 @@ Uso (exemplos):
   python3 generate_report.py --formato txt  --output-dir ./downloads
 
 ObservaÃ§Ãµes importantes:
-- Este script Ã© chamado pelo Node (pythonRunner.runReportGeneration) e precisa imprimir um JSON vÃ¡lido em STDOUT.
+- Este script são chamado pelo Node (pythonRunner.runReportGeneration) e precisa imprimir um JSON vÃ¡lido em STDOUT.
 - Logs de andamento/erro vÃ£o para STDERR para nÃ£o â€œsujarâ€ o JSON de saÃ­da.
 """
 
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -78,16 +79,59 @@ def buscar_dados_consolidados(cursor):
     """
     query = """
     SELECT
-        Titulo, ParcelaSequencial, ParcelaCondicao, Codigoempresa, Empresa,
-        Codcentro_de_custo, Centro_de_custo, Codcliente, Cliente, Documento,
-        DocumentoProcessado, numdocumento, Origem, Tipocondicao, DataEmissao, DataVencimento,
-        numPlanoFinanceiro, PlanoFinanceiro, Datadabaixa, Valororiginal,
-        ValorPendente, Valordabaixa, Acrescimo, Desconto, ValorLiquido, numConta
+        Codigoempresa,
+        NomeDaEmpresa,
+        CodigoDoCentroDeCusto,
+        NomeDoCentroDeCusto,
+        CodigoDoPlanoFinanceiroComMascara,
+        numPlanoFinanceiro,
+        PlanoFinanceiro,
+        CodigoDoCliente,
+        NomeDoCliente,
+        NumeroCPFCNPJ,
+        LPAD(TRIM(CAST(NumeroDoDocumento AS CHAR)), 4, '0') AS NumeroDoDocumento,
+        NomeDoDocumento,
+        NumeroDoTitulo,
+        NumeroDaParcela,
+        NomeDoTipoDeCondicao,
+        DATE_FORMAT(DataDeEmissao, '%d/%m/%Y') AS DataDeEmissao,
+        DATE_FORMAT(DataDeVencimento, '%d/%m/%Y') AS DataDeVencimento,
+        ValorOriginalRateado,
+        SaldoAtual,
+        ValorDaBaixaRateado,
+        DATE_FORMAT(Datadabaixa, '%d/%m/%Y') AS Datadabaixa,
+        AcrescimoRateado,
+        DescontoRateado,
+        ValorLiquido,
+        numConta,
+        ValorRate,
+        StatusParcela
     FROM RELATORIO_CONSOLIDADO
-    ORDER BY Titulo, ParcelaSequencial
+    ORDER BY NumeroDoTitulo, NumeroDaParcela
     """
     cursor.execute(query)
-    return cursor.fetchall()
+    rows = cursor.fetchall()
+    for row in rows:
+        row['NumeroDoDocumento'] = normalizar_numero_documento(row.get('NumeroDoDocumento'))
+    return rows
+
+
+def normalizar_numero_documento(valor):
+    """
+    Garante NumeroDoDocumento com 4 digitos (ex.: 374 -> 0374).
+    """
+    if valor is None:
+        return ''
+    s = str(valor).strip()
+    if not s:
+        return ''
+
+    # Trata casos como "374", 374, "374.0"
+    if re.fullmatch(r'\d+(\.0+)?', s):
+        s = str(int(float(s)))
+    if s.isdigit():
+        return s.zfill(4)
+    return s
 
 
 # =============================================================================
@@ -150,7 +194,7 @@ def main():
         connection = pymysql.connect(**MYSQL_CONFIG)
         cursor = connection.cursor()
 
-        # Log em STDERR para nÃ£o atrapalhar o JSON (STDOUT)
+        # Log em STDERR para não atrapalhar o JSON (STDOUT)
         print('Buscando dados consolidados...', file=sys.stderr)
 
         # Busca dados

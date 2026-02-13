@@ -176,6 +176,7 @@ class PythonRunner {
         env: {
           ...process.env,   // 🔥 repassa variáveis de ambiente
           PYTHONUTF8: '1',  // 🔥 evita problema com "Área" -> "�rea"
+          PYTHONIOENCODING: 'utf-8',
         },
         windowsHide: true,
       });

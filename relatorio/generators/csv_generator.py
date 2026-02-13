@@ -3,33 +3,42 @@ Gerador CSV - Streaming para volumes grandes
 """
 
 import csv
-from pathlib import Path
+import re
+
+
+def _format_numero_documento(value):
+    if value is None:
+        return ""
+    s = str(value).strip()
+    if not s:
+        return ""
+    if re.fullmatch(r"\d+(\.0+)?", s):
+        s = str(int(float(s)))
+    if s.isdigit():
+        s = s.zfill(4)
+        # Mantem 0 a esquerda ao abrir CSV no Excel.
+        return f'="{s}"'
+    return s
+
 
 class CSVGenerator:
-    """Gera arquivo CSV usando streaming"""
-    
+    """Gera arquivo CSV usando streaming."""
+
     def generate(self, rows, filepath):
-        """
-        Gera arquivo CSV
-        
-        Args:
-            rows: Lista de dicionários com dados
-            filepath: Caminho do arquivo de saída
-        """
-        
         if not rows:
             raise ValueError("Nenhum dado para exportar")
-        
-        # Cabeçalhos (pega chaves do primeiro registro)
+
         headers = list(rows[0].keys())
-        
-        # Escrever CSV em streaming
-        with open(filepath, 'w', newline='', encoding='utf-8-sig') as f:
-            writer = csv.DictWriter(f, fieldnames=headers, delimiter=';')
-            
-            # Escrever cabeçalho
+        has_doc = "NumeroDoDocumento" in headers
+
+        with open(filepath, "w", newline="", encoding="utf-8-sig") as f:
+            writer = csv.DictWriter(f, fieldnames=headers, delimiter=";")
             writer.writeheader()
-            
-            # Escrever registros
+
             for row in rows:
-                writer.writerow(row)
+                row_out = dict(row)
+                if has_doc:
+                    row_out["NumeroDoDocumento"] = _format_numero_documento(
+                        row_out.get("NumeroDoDocumento")
+                    )
+                writer.writerow(row_out)

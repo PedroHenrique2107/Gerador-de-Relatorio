@@ -1,4 +1,4 @@
-"""
+﻿"""
 Base abstrata para loaders.
 
 Define interface que todos os loaders devem implementar.
@@ -33,9 +33,9 @@ class LoadResult:
         return (self.rows_inserted / total) * 100
     
     def __str__(self) -> str:
-        """Representação em string."""
+        """RepresentaÃ§Ã£o em string."""
         return (
-            f"✓ {self.table}: {self.rows_inserted} registros "
+            f"OK {self.table}: {self.rows_inserted} registros "
             f"({self.success_rate:.1f}% sucesso) em {self.execution_time:.2f}s"
         )
 
@@ -48,7 +48,7 @@ class BaseLoader(ABC):
         Inicializa loader.
         
         Args:
-            config: Configurações específicas do loader
+            config: ConfiguraÃ§Ãµes especÃ­ficas do loader
         """
         self.config = config or {}
         self.logger = self._get_logger()
@@ -72,7 +72,7 @@ class BaseLoader(ABC):
         Args:
             file_path: Caminho do arquivo JSON
             table_name: Nome da tabela
-            **kwargs: Argumentos específicos do loader
+            **kwargs: Argumentos especÃ­ficos do loader
         
         Returns:
             LoadResult: Resultado do carregamento
@@ -89,7 +89,7 @@ class BaseLoader(ABC):
         select_columns: Optional[List[str]] = None,
     ) -> pd.DataFrame:
         """
-        Prepara DataFrame para inserção.
+        Prepara DataFrame para inserÃ§Ã£o.
         
         Args:
             df: DataFrame original
@@ -99,7 +99,7 @@ class BaseLoader(ABC):
         Returns:
             pd.DataFrame: DataFrame preparado
         """
-        # Renomeia colunas se necessário
+        # Renomeia colunas se necessÃ¡rio
         if rename_map:
             df = df.rename(columns=rename_map)
         
@@ -119,3 +119,4 @@ class BaseLoader(ABC):
     def _get_chunk_size(config: Dict[str, Any], default: int = 5000) -> int:
         """Retorna tamanho do chunk."""
         return config.get('chunk_size', default)
+

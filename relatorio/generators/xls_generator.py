@@ -2,36 +2,41 @@
 Gerador XLS - Usando openpyxl em modo write-only para performance
 """
 
+import re
 from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment
-from pathlib import Path
+
+
+def _format_numero_documento(value):
+    if value is None:
+        return ""
+    s = str(value).strip()
+    if not s:
+        return ""
+    if re.fullmatch(r"\d+(\.0+)?", s):
+        s = str(int(float(s)))
+    if s.isdigit():
+        return s.zfill(4)
+    return s
+
 
 class XLSGenerator:
-    """Gera arquivo Excel (.xlsx) otimizado"""
-    
+    """Gera arquivo Excel (.xlsx) otimizado."""
+
     def generate(self, rows, filepath):
-        """
-        Gera arquivo Excel
-        
-        Args:
-            rows: Lista de dicionários com dados
-            filepath: Caminho do arquivo de saída
-        """
-        
         if not rows:
             raise ValueError("Nenhum dado para exportar")
-        
-        # Criar workbook
+
         wb = Workbook(write_only=True)
-        ws = wb.create_sheet('Relatório')
-        
-        # Cabeçalhos
+        ws = wb.create_sheet("Relatorio")
+
         headers = list(rows[0].keys())
         ws.append(headers)
-        
-        # Dados
+        doc_idx = headers.index("NumeroDoDocumento") if "NumeroDoDocumento" in headers else -1
+
         for row in rows:
-            ws.append(list(row.values()))
-        
-        # Salvar
+            values = list(row.values())
+            if doc_idx >= 0:
+                values[doc_idx] = _format_numero_documento(values[doc_idx])
+            ws.append(values)
+
         wb.save(filepath)
