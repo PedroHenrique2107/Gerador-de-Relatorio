@@ -34,6 +34,7 @@ class HistoryManager {
         id: history.length + 1,
         jobId: job.jobId,
         formato: job.formato,
+        syncBeforeRun: Boolean(job.syncBeforeRun),
         status: job.status,
         fileName: job.result.fileName,
         fileSize: job.result.fileSize,

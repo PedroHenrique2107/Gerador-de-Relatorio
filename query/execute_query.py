@@ -58,16 +58,13 @@ SELECT DISTINCT
   ech.customerId AS CodigoDoCliente,
   ech.customerName AS NomeDoCliente,
   ech.customerDocument AS NumeroCPFCNPJ,
-  CASE
-    WHEN sd.documentNumber IS NULL OR TRIM(CAST(sd.documentNumber AS CHAR)) = '' THEN ''
-    ELSE LPAD(CAST(sd.documentNumber AS CHAR), 4, '0')
-  END AS NumeroDoDocumento,
+  sd.documentNumber AS NumeroDoDocumento,
   sd.documentIdentificationName AS NomeDoDocumento,
   ech.billReceivableId AS NumeroDoTitulo,
   ech.Id AS NumeroDaParcela,
   ech.paymentTermsDescrition AS NomeDoTipoDeCondicao,
-  ech.lastRenegotiationDate AS DataDeEmissao,
-  ech.dueDate AS DataDeVencimento,
+  DATE(ech.lastRenegotiationDate) AS DataDeEmissao,
+  DATE(ech.dueDate) AS DataDeVencimento,
   REPLACE(REPLACE(REPLACE(FORMAT(
     ROUND(COALESCE(ech.originalValue, 0) * COALESCE(sd.financialCategoryRate, 0) / 100, 2), 2
   ), ',', '#'), '.', ','), '#', '.') AS ValorOriginalRateado,
@@ -78,7 +75,7 @@ SELECT DISTINCT
   REPLACE(REPLACE(REPLACE(FORMAT(
     ROUND(COALESCE(ech.receiptValue, 0) * COALESCE(sd.financialCategoryRate, 0) / 100, 2), 2
   ), ',', '#'), '.', ','), '#', '.') AS ValorDaBaixaRateado,
-  ech.receiptDate AS Datadabaixa,
+  DATE(ech.receiptDate) AS Datadabaixa,
   REPLACE(REPLACE(REPLACE(FORMAT(
     ROUND(COALESCE(ech.receiptExtra, 0) * COALESCE(sd.financialCategoryRate, 0) / 100, 2), 2
   ), ',', '#'), '.', ','), '#', '.') AS AcrescimoRateado,
@@ -91,12 +88,13 @@ SELECT DISTINCT
     ROUND(COALESCE(ech.receiptDiscount, 0) * COALESCE(sd.financialCategoryRate, 0) / 100, 2), 2
   ), ',', '#'), '.', ','), '#', '.') AS ValorLiquido,
   sdr.accountNumber AS numConta,
-  REPLACE(FORMAT(ROUND(sd.financialCategoryRate, 2), 2), '.', ',') AS ValorRate,
-  IF(
-    COALESCE(ech.receiptValue, 0) = 0, "A Receber",
-    IF(
-      ech.originalValue > ech.receiptValue, "Pagamento Parcial",
-      IF(ech.originalValue = ech.receiptValue, "Recebimento Total", "")
+  IF (
+    UPPER(TRIM(sdr.accountNumber)) = 'REAPROFIN',
+    'Distrato',
+    IF (COALESCE(ech.receiptValue,0) = 0, 'A Receber',
+        IF (ech.originalValue > ech.receiptValue,'Pagamento Parcial',
+            IF (ech.originalValue = ech.receiptValue,'Pagamento Total', '')
+        )
     )
   ) AS StatusParcela
 FROM SI_EXTRATO_CLIENTE_HISTORICO ech
@@ -108,6 +106,7 @@ LEFT JOIN SI_DATAPAGTO_receipts sdr
   ON sdr.billId = ech.billReceivableId
   AND sdr.companyId = ech.companyId
   AND sdr.installmentId = ech.Id
+  AND sdr.netAmount = ech.receiptValue
 WHERE sd.financialCategoryId IS NOT NULL
 """
 
@@ -138,7 +137,6 @@ QUERY_COLUMNS = [
     "DescontoRateado",
     "ValorLiquido",
     "numConta",
-    "ValorRate",
     "StatusParcela",
 ]
 
@@ -161,17 +159,16 @@ CREATE TABLE IF NOT EXISTS RELATORIO_CONSOLIDADO (
     NumeroDoTitulo BIGINT,
     NumeroDaParcela BIGINT,
     NomeDoTipoDeCondicao VARCHAR(120),
-    DataDeEmissao DATETIME NULL,
-    DataDeVencimento DATETIME NULL,
+    DataDeEmissao DATE NULL,
+    DataDeVencimento DATE NULL,
     ValorOriginalRateado VARCHAR(30),
     SaldoAtual VARCHAR(30),
     ValorDaBaixaRateado VARCHAR(30),
-    Datadabaixa DATETIME NULL,
+    Datadabaixa DATE NULL,
     AcrescimoRateado VARCHAR(30),
     DescontoRateado VARCHAR(30),
     ValorLiquido VARCHAR(30),
     numConta VARCHAR(50),
-    ValorRate VARCHAR(20),
     StatusParcela VARCHAR(30),
     data_execucao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_data_execucao (data_execucao),
@@ -186,6 +183,49 @@ def criar_tabela_consolidada(cursor) -> None:
     cursor.execute("DROP TABLE IF EXISTS RELATORIO_CONSOLIDADO")
     cursor.execute(DDL_RELATORIO_EXATO)
     print("Tabela RELATORIO_CONSOLIDADO recriada no padrao da QUERY_PADRAO", file=sys.stderr)
+
+
+def _index_exists(cursor, table_name: str, index_name: str) -> bool:
+    cursor.execute(
+        """
+        SELECT 1
+        FROM information_schema.statistics
+        WHERE table_schema = DATABASE()
+          AND table_name = %s
+          AND index_name = %s
+        LIMIT 1
+        """,
+        (table_name, index_name),
+    )
+    return cursor.fetchone() is not None
+
+
+def garantir_indices_fonte(cursor) -> None:
+    """Cria índices de join quando ausentes para acelerar a etapa 2."""
+    idx_defs = [
+        (
+            "SI_EXTRATO_CLIENTE_HISTORICO",
+            "idx_ech_join",
+            "CREATE INDEX idx_ech_join ON SI_EXTRATO_CLIENTE_HISTORICO (companyId, billReceivableId, Id)",
+        ),
+        (
+            "SI_DATACOMPETPARCELAS",
+            "idx_sd_join",
+            "CREATE INDEX idx_sd_join ON SI_DATACOMPETPARCELAS (companyId, billId, installmentId)",
+        ),
+        (
+            "SI_DATAPAGTO_receipts",
+            "idx_sdr_join",
+            "CREATE INDEX idx_sdr_join ON SI_DATAPAGTO_receipts (companyId, billId, installmentId, netAmount)",
+        ),
+    ]
+
+    for table_name, index_name, ddl in idx_defs:
+        if _index_exists(cursor, table_name, index_name):
+            continue
+        print(f"Criando indice {index_name} em {table_name}...", file=sys.stderr)
+        cursor.execute(ddl)
+        print(f"Indice criado: {index_name}", file=sys.stderr)
 
 
 def limpar_dados_antigos(cursor) -> None:
@@ -225,6 +265,7 @@ def main() -> int:
         print("Conectado ao MySQL", file=sys.stderr)
         print(file=sys.stderr)
 
+        garantir_indices_fonte(cursor)
         criar_tabela_consolidada(cursor)
         limpar_dados_antigos(cursor)
         rows = executar_query_e_inserir(cursor)

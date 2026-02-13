@@ -67,3 +67,7 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 
 2026-02-13 01:34:32,786 - main - [32mINFO[0m - Carregando arquivo: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data\PARCELAS_CONTARECEBER_DATACOMPETPARCELAS.json
 2026-02-13 01:35:54,093 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
 2026-02-13 01:46:11,659 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 14:06:02,937 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 14:27:22,376 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 16:27:33,353 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data
+2026-02-13 16:57:58,947 - main - [32mINFO[0m - Carregando diretÃ³rio: C:\Users\PedroMendes\Área de Trabalho\Aplicações\GeradorRelatório\backend\data

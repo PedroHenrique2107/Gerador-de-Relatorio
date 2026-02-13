@@ -112,10 +112,10 @@ class JobManager extends EventEmitter {
       });
 
       // Etapa 3: gerar o arquivo final para download
-      await this.runStep(jobId, 3, 'Gerando arquivo de relatório...', async () => {
+      await this.runStep(jobId, 3, 'Gerando arquivo de relatorio...', async () => {
         const result = await pythonRunner.runReportGeneration(job.formato);
 
-        // Copia metadados retornados pelo Python para o job (usado na UI e histórico)
+        // Copia metadados retornados pelo Python para o job (usado na UI e histÃ³rico)
         job.result.fileName = result.fileName;
         job.result.fileSize = result.fileSize;
         job.result.recordCount = result.recordCount;

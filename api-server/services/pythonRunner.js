@@ -99,14 +99,16 @@ class PythonRunner {
   async runBackendInsert() {
     const scriptPath = this.resolveEnvPath('BACKEND_INSERT_SCRIPT');
     const dataFolder = this.resolveEnvPath('DATA_FOLDER');
+    const pattern = process.env.BACKEND_INSERT_PATTERN || 'SI_*.json';
+    const chunkSize = process.env.BACKEND_INSERT_CHUNK_SIZE || '15000';
 
     // Args do script (contrato esperado do Python)
     const args = [
       scriptPath,
       '--dir', dataFolder,
-      '--pattern', '*.json',
+      '--pattern', pattern,
       '--mode', 'quick',
-      '--chunk-size', '5000',
+      '--chunk-size', chunkSize,
       '--if-exists', 'replace'
     ];
 

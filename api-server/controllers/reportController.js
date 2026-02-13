@@ -1,4 +1,4 @@
-﻿// Controller responsÃ¡vel por iniciar geraÃ§Ã£o de relatÃ³rios,
+﻿// Controller responsavél por iniciar geraÃ§Ã£o de relatÃ³rios,
 // consultar status de jobs e retornar histÃ³rico.
 // NÃƒO gera arquivos diretamente â€” apenas gerencia requisiÃ§Ãµes HTTP.
 

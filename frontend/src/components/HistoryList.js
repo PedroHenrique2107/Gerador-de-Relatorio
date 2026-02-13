@@ -68,6 +68,15 @@ function HistoryItem({ item }) {
             >
               {badge.label}
             </span>
+            {item.syncBeforeRun && (
+              <span className="sync-badge" title="Sincronizado com Sienge" data-testid="sync-badge">
+                <img
+                  src="/image/sienge.png"
+                  alt="Sienge"
+                  className="sync-logo"
+                />
+              </span>
+            )}
           </div>
           <div className="history-meta">
             <span data-testid="record-count">{item.recordCount?.toLocaleString()} registros</span>

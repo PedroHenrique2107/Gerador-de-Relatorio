@@ -80,6 +80,20 @@ from app.core import setup_logger, get_logger
 logger = setup_logger('main')
 
 
+TABLE_NAME_ALIASES = {
+    # Centraliza variantes na tabela padrão desejada.
+    "SI_DATA_COMPETENCIA": "SI_DATACOMPETPARCELAS",
+}
+
+
+def resolve_table_name(file_path: Path, explicit_table: str = None) -> str:
+    """Resolve nome da tabela para um arquivo JSON."""
+    if explicit_table:
+        return explicit_table
+    stem = file_path.stem
+    return TABLE_NAME_ALIASES.get(stem, stem)
+
+
 def main():
     """Função principal."""
     parser = argparse.ArgumentParser(
@@ -169,7 +183,7 @@ def main():
             # Define o nome da tabela:
             # - Se o usuÃ¡rio informou --table, usa esse nome
             # - SenÃ£o, usa o nome do arquivo sem extensÃ£o
-            table_name = args.table or args.file.stem
+            table_name = resolve_table_name(args.file, args.table)
             
             result = app.load_json(
                 args.file,
@@ -191,9 +205,36 @@ def main():
             if not files:
                 logger.error(f"Nenhum arquivo encontrado: {args.dir}/{args.pattern}")
                 return 1
-            
+
+            # Resolve nomes de tabela com aliases e elimina conflitos por tabela destino.
+            # Se houver mais de um JSON para a mesma tabela final, prioriza SI_DATACOMPETPARCELAS.
+            selected = {}
+            for file_path in files:
+                table_name = resolve_table_name(file_path)
+                current = selected.get(table_name)
+                if current is None:
+                    selected[table_name] = file_path
+                    continue
+
+                current_is_priority = current.stem == "SI_DATACOMPETPARCELAS"
+                incoming_is_priority = file_path.stem == "SI_DATACOMPETPARCELAS"
+                if incoming_is_priority and not current_is_priority:
+                    logger.warning(
+                        f"Conflito de tabela '{table_name}': "
+                        f"substituindo {current.name} por {file_path.name}"
+                    )
+                    selected[table_name] = file_path
+                else:
+                    logger.warning(
+                        f"Conflito de tabela '{table_name}': ignorando {file_path.name}"
+                    )
+
+            selected_files = list(selected.values())
+            selected_table_names = [resolve_table_name(f) for f in selected_files]
+
             results = app.load_multiple(
-                files,
+                selected_files,
+                table_names=selected_table_names,
                 lines=args.lines,
                 if_exists=args.if_exists,
             )

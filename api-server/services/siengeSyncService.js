@@ -31,6 +31,8 @@ class SiengeSyncService {
     this.defaultStartDate = process.env.SIENGE_START_DATE || "2000-01-01";
     this.defaultEndDate = process.env.SIENGE_END_DATE || "2100-12-31";
     this.timeoutMs = Number(process.env.SIENGE_TIMEOUT_MS || 120000);
+    this.pageSize = Number(process.env.SIENGE_PAGE_SIZE || 500);
+    this.maxPages = Number(process.env.SIENGE_MAX_PAGES || 1000);
   }
 
   /**
@@ -156,6 +158,94 @@ class SiengeSyncService {
   }
 
   /**
+   * Normaliza payload para lista de registros.
+   */
+  extractRows(payload) {
+    if (Array.isArray(payload)) {
+      return payload;
+    }
+    if (payload && Array.isArray(payload.data)) {
+      return payload.data;
+    }
+    return [];
+  }
+
+  /**
+   * Mantém formato do payload original, mas com todos os registros agregados.
+   */
+  buildMergedPayload(firstPayload, allRows) {
+    if (Array.isArray(firstPayload)) {
+      return allRows;
+    }
+    return {
+      ...(firstPayload || {}),
+      data: allRows,
+    };
+  }
+
+  /**
+   * Faz paginação page/pageSize até trazer tudo.
+   */
+  async fetchAllPages(task, headers) {
+    const allRows = [];
+    let firstPayload = null;
+    let page = 1;
+    let pagesFetched = 0;
+    let previousPageSignature = null;
+
+    while (page <= this.maxPages) {
+      const query = {
+        ...task.query,
+        page,
+        pageSize: this.pageSize,
+      };
+      const url = this.buildUrl(task.endpoint, query);
+
+      logger.info(`[SIENGE_SYNC] Requisição ${task.id} página ${page}: ${url.toString()}`);
+      const payload = await this.requestJson(url, headers);
+      const rows = this.extractRows(payload);
+
+      if (!firstPayload) {
+        firstPayload = payload;
+      }
+
+      pagesFetched += 1;
+      allRows.push(...rows);
+      logger.info(`[SIENGE_SYNC] ${task.id} página ${page}: ${rows.length} registros`);
+
+      if (rows.length === 0 || rows.length < this.pageSize) {
+        break;
+      }
+
+      // Proteção para API que ignora page/pageSize e repete sempre a mesma página.
+      const first = JSON.stringify(rows[0] || null);
+      const last = JSON.stringify(rows[rows.length - 1] || null);
+      const signature = `${rows.length}|${first}|${last}`;
+      if (previousPageSignature && previousPageSignature === signature) {
+        logger.warn(
+          `[SIENGE_SYNC] ${task.id}: resposta repetida detectada na paginação. Encerrando para evitar loop.`
+        );
+        break;
+      }
+      previousPageSignature = signature;
+
+      page += 1;
+    }
+
+    if (page > this.maxPages) {
+      logger.warn(
+        `[SIENGE_SYNC] ${task.id}: limite de páginas atingido (${this.maxPages}).`
+      );
+    }
+
+    return {
+      payload: this.buildMergedPayload(firstPayload, allRows),
+      pagesFetched,
+      records: allRows.length,
+    };
+  }
+
+  /**
    * Sincroniza todos os datasets
    */
   async syncAll() {
@@ -210,20 +300,21 @@ class SiengeSyncService {
     };
 
     for (const task of tasks) {
-      const url = this.buildUrl(task.endpoint, task.query);
-
-      logger.info(`[SIENGE_SYNC] Requisição ${task.id}: ${url.toString()}`);
-      const payload = await this.requestJson(url, headers);
+      const { payload, pagesFetched, records } = await this.fetchAllPages(task, headers);
       const savedPath = await this.writeJson(task.fileName, payload);
 
       result.files.push({
         id: task.id,
         fileName: task.fileName,
         savedPath,
-        endpoint: `${task.endpoint}?${url.searchParams.toString()}`,
+        endpoint: task.endpoint,
+        pagesFetched,
+        records,
       });
 
-      logger.info(`[SIENGE_SYNC] Arquivo atualizado: ${task.fileName}`);
+      logger.info(
+        `[SIENGE_SYNC] Arquivo atualizado: ${task.fileName} (${records} registros em ${pagesFetched} página(s))`
+      );
     }
 
     result.finishedAt = new Date().toISOString();
